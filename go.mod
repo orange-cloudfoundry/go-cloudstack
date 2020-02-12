@@ -1,3 +1,3 @@
-module github.com/xanzy/go-cloudstack/v2
+module github.com/orange-cloudfoundry/go-cloudstack/v2
 
 go 1.13
