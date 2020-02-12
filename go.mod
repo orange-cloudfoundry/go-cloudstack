@@ -1,3 +1,3 @@
-module github.com/orange-cloudfoundry/go-cloudstack/v2
+module github.com/orange-cloudfoundry/go-cloudstack
 
-go 1.13
+go 1.12
