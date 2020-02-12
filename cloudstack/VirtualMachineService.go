@@ -822,10 +822,11 @@ func (p *DeployVirtualMachineParams) toURLValues() url.Values {
 		u.Set("deploymentplanner", v.(string))
 	}
 	if v, found := p.p["details"]; found {
-		i := 0
-		for k, vv := range v.(map[string]string) {
-			u.Set(fmt.Sprintf("details[%d].%s", i, k), vv)
-			i++
+		for index, item := range v.([]interface{}) {
+			content := item.(map[string]string)
+			for key, val := range content {
+				u.Set(fmt.Sprintf("details[%d].%s", index, key), val)
+			}
 		}
 	}
 	if v, found := p.p["dhcpoptionsnetworklist"]; found {
@@ -926,6 +927,19 @@ func (p *DeployVirtualMachineParams) toURLValues() url.Values {
 		u.Set("zoneid", v.(string))
 	}
 	return u
+}
+
+func (p *DeployVirtualMachineParams) AddDetails(v map[string]string) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	if _, found := p.p["details"]; !found {
+		p.p["details"] = []interface{}{}
+	}
+
+	value := p.p["details"].([]interface{})
+	value = append(value, v)
+	p.p["details"] = value
 }
 
 func (p *DeployVirtualMachineParams) SetAccount(v string) {
