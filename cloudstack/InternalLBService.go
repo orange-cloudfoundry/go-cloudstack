@@ -105,10 +105,11 @@ func (s *InternalLBService) ConfigureInternalLoadBalancerElement(p *ConfigureInt
 }
 
 type InternalLoadBalancerElementResponse struct {
-	JobID   string `json:"jobid"`
-	Enabled bool   `json:"enabled"`
-	Id      string `json:"id"`
-	Nspid   string `json:"nspid"`
+	Enabled   bool   `json:"enabled"`
+	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
+	Nspid     string `json:"nspid"`
 }
 
 type CreateInternalLoadBalancerElementParams struct {
@@ -179,10 +180,11 @@ func (s *InternalLBService) CreateInternalLoadBalancerElement(p *CreateInternalL
 }
 
 type CreateInternalLoadBalancerElementResponse struct {
-	JobID   string `json:"jobid"`
-	Enabled bool   `json:"enabled"`
-	Id      string `json:"id"`
-	Nspid   string `json:"nspid"`
+	Enabled   bool   `json:"enabled"`
+	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
+	Nspid     string `json:"nspid"`
 }
 
 type ListInternalLoadBalancerElementsParams struct {
@@ -328,9 +330,11 @@ type ListInternalLoadBalancerElementsResponse struct {
 }
 
 type InternalLoadBalancerElement struct {
-	Enabled bool   `json:"enabled"`
-	Id      string `json:"id"`
-	Nspid   string `json:"nspid"`
+	Enabled   bool   `json:"enabled"`
+	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
+	Nspid     string `json:"nspid"`
 }
 
 type ListInternalLoadBalancerVMsParams struct {
@@ -668,37 +672,15 @@ type InternalLoadBalancerVM struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -789,7 +771,6 @@ func (s *InternalLBService) StartInternalLoadBalancerVM(p *StartInternalLoadBala
 }
 
 type StartInternalLoadBalancerVMResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -809,37 +790,15 @@ type StartInternalLoadBalancerVMResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -942,7 +901,6 @@ func (s *InternalLBService) StopInternalLoadBalancerVM(p *StopInternalLoadBalanc
 }
 
 type StopInternalLoadBalancerVMResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -962,37 +920,15 @@ type StopInternalLoadBalancerVMResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`

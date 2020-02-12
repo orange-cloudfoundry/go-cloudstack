@@ -152,26 +152,29 @@ func (s *PortableIPService) CreatePortableIpRange(p *CreatePortableIpRangeParams
 }
 
 type CreatePortableIpRangeResponse struct {
-	JobID             string `json:"jobid"`
-	Endip             string `json:"endip"`
-	Gateway           string `json:"gateway"`
-	Id                string `json:"id"`
-	Netmask           string `json:"netmask"`
-	Portableipaddress []struct {
-		Accountid         string `json:"accountid"`
-		Allocated         string `json:"allocated"`
-		Domainid          string `json:"domainid"`
-		Ipaddress         string `json:"ipaddress"`
-		Networkid         string `json:"networkid"`
-		Physicalnetworkid string `json:"physicalnetworkid"`
-		Regionid          int    `json:"regionid"`
-		State             string `json:"state"`
-		Vpcid             string `json:"vpcid"`
-		Zoneid            string `json:"zoneid"`
-	} `json:"portableipaddress"`
-	Regionid int    `json:"regionid"`
-	Startip  string `json:"startip"`
-	Vlan     string `json:"vlan"`
+	Endip             string                                           `json:"endip"`
+	Gateway           string                                           `json:"gateway"`
+	Id                string                                           `json:"id"`
+	JobID             string                                           `json:"jobid"`
+	Jobstatus         int                                              `json:"jobstatus"`
+	Netmask           string                                           `json:"netmask"`
+	Portableipaddress []CreatePortableIpRangeResponsePortableipaddress `json:"portableipaddress"`
+	Regionid          int                                              `json:"regionid"`
+	Startip           string                                           `json:"startip"`
+	Vlan              string                                           `json:"vlan"`
+}
+
+type CreatePortableIpRangeResponsePortableipaddress struct {
+	Accountid         string `json:"accountid"`
+	Allocated         string `json:"allocated"`
+	Domainid          string `json:"domainid"`
+	Ipaddress         string `json:"ipaddress"`
+	Networkid         string `json:"networkid"`
+	Physicalnetworkid string `json:"physicalnetworkid"`
+	Regionid          int    `json:"regionid"`
+	State             string `json:"state"`
+	Vpcid             string `json:"vpcid"`
+	Zoneid            string `json:"zoneid"`
 }
 
 type DeletePortableIpRangeParams struct {
@@ -237,8 +240,9 @@ func (s *PortableIPService) DeletePortableIpRange(p *DeletePortableIpRangeParams
 }
 
 type DeletePortableIpRangeResponse struct {
-	JobID       string `json:"jobid"`
 	Displaytext string `json:"displaytext"`
+	JobID       string `json:"jobid"`
+	Jobstatus   int    `json:"jobstatus"`
 	Success     bool   `json:"success"`
 }
 
@@ -374,23 +378,27 @@ type ListPortableIpRangesResponse struct {
 }
 
 type PortableIpRange struct {
-	Endip             string `json:"endip"`
-	Gateway           string `json:"gateway"`
-	Id                string `json:"id"`
-	Netmask           string `json:"netmask"`
-	Portableipaddress []struct {
-		Accountid         string `json:"accountid"`
-		Allocated         string `json:"allocated"`
-		Domainid          string `json:"domainid"`
-		Ipaddress         string `json:"ipaddress"`
-		Networkid         string `json:"networkid"`
-		Physicalnetworkid string `json:"physicalnetworkid"`
-		Regionid          int    `json:"regionid"`
-		State             string `json:"state"`
-		Vpcid             string `json:"vpcid"`
-		Zoneid            string `json:"zoneid"`
-	} `json:"portableipaddress"`
-	Regionid int    `json:"regionid"`
-	Startip  string `json:"startip"`
-	Vlan     string `json:"vlan"`
+	Endip             string                             `json:"endip"`
+	Gateway           string                             `json:"gateway"`
+	Id                string                             `json:"id"`
+	JobID             string                             `json:"jobid"`
+	Jobstatus         int                                `json:"jobstatus"`
+	Netmask           string                             `json:"netmask"`
+	Portableipaddress []PortableIpRangePortableipaddress `json:"portableipaddress"`
+	Regionid          int                                `json:"regionid"`
+	Startip           string                             `json:"startip"`
+	Vlan              string                             `json:"vlan"`
+}
+
+type PortableIpRangePortableipaddress struct {
+	Accountid         string `json:"accountid"`
+	Allocated         string `json:"allocated"`
+	Domainid          string `json:"domainid"`
+	Ipaddress         string `json:"ipaddress"`
+	Networkid         string `json:"networkid"`
+	Physicalnetworkid string `json:"physicalnetworkid"`
+	Regionid          int    `json:"regionid"`
+	State             string `json:"state"`
+	Vpcid             string `json:"vpcid"`
+	Zoneid            string `json:"zoneid"`
 }

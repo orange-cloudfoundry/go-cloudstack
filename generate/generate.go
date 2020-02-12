@@ -32,9 +32,25 @@ import (
 	"unicode"
 )
 
-type apiInfo map[string][]string
-
 const pkg = "cloudstack"
+
+// detailsRequireKeyValue is a prefilled map with a list of details
+// that need to be encoded using an explicit key and a value entry.
+var detailsRequireKeyValue = map[string]bool{
+	"addGuestOs":                  true,
+	"addImageStore":               true,
+	"addResourceDetail":           true,
+	"createSecondaryStagingStore": true,
+	"updateCloudToUseObjectStore": true,
+	"updateGuestOs":               true,
+	"updateZone":                  true,
+}
+
+// We prefill this one value to make sure it is not
+// created twice, as this is also a top level type.
+var typeNames = map[string]bool{"Nic": true}
+
+type apiInfo map[string][]string
 
 type allServices struct {
 	services services
@@ -237,6 +253,9 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("	return idRegex.MatchString(id)")
 	pn("}")
 	pn("")
+	pn("// ClientOption can be passed to new client functions to set custom options")
+	pn("type ClientOption func(*CloudStackClient)")
+	pn("")
 	pn("// OptionFunc can be passed to the courtesy helper functions to set additional parameters")
 	pn("type OptionFunc func(*CloudStackClient, interface{}) error")
 	pn("")
@@ -267,14 +286,23 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("}")
 	pn("")
 	pn("// Creates a new client for communicating with CloudStack")
-	pn("func newClient(apiurl string, apikey string, secret string, async bool, verifyssl bool) *CloudStackClient {")
+	pn("func newClient(apiurl string, apikey string, secret string, async bool, verifyssl bool, options ...ClientOption) *CloudStackClient {")
 	pn("	jar, _ := cookiejar.New(nil)")
 	pn("	cs := &CloudStackClient{")
 	pn("		client: &http.Client{")
 	pn("			Jar: jar,")
 	pn("			Transport: &http.Transport{")
-	pn("				Proxy:           http.ProxyFromEnvironment,")
-	pn("				TLSClientConfig: &tls.Config{InsecureSkipVerify: !verifyssl}, // If verifyssl is true, skipping the verify should be false and vice versa")
+	pn("				Proxy: http.ProxyFromEnvironment,")
+	pn("				DialContext: (&net.Dialer{")
+	pn("					Timeout:   30 * time.Second,")
+	pn("					KeepAlive: 30 * time.Second,")
+	pn("					DualStack: true,")
+	pn("				}).DialContext,")
+	pn("				MaxIdleConns:          100,")
+	pn("				IdleConnTimeout:       90 * time.Second,")
+	pn("				TLSClientConfig:       &tls.Config{InsecureSkipVerify: !verifyssl},")
+	pn("				TLSHandshakeTimeout:   10 * time.Second,")
+	pn("				ExpectContinueTimeout: 1 * time.Second,")
 	pn("			},")
 	pn("		Timeout: time.Duration(60 * time.Second),")
 	pn("		},")
@@ -285,17 +313,23 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("		options: []OptionFunc{},")
 	pn("		timeout: 300,")
 	pn("	}")
+	pn("")
+	pn("	for _, fn := range options {")
+	pn("		fn(cs)")
+	pn("	}")
+	pn("")
 	for _, s := range as.services {
 		pn("	cs.%s = New%s(cs)", strings.TrimSuffix(s.name, "Service"), s.name)
 	}
+	pn("")
 	pn("	return cs")
 	pn("}")
 	pn("")
 	pn("// Default non-async client. So for async calls you need to implement and check the async job result yourself. When using")
 	pn("// HTTPS with a self-signed certificate to connect to your CloudStack API, you would probably want to set 'verifyssl' to")
 	pn("// false so the call ignores the SSL errors/warnings.")
-	pn("func NewClient(apiurl string, apikey string, secret string, verifyssl bool) *CloudStackClient {")
-	pn("	cs := newClient(apiurl, apikey, secret, false, verifyssl)")
+	pn("func NewClient(apiurl string, apikey string, secret string, verifyssl bool, options ...ClientOption) *CloudStackClient {")
+	pn("	cs := newClient(apiurl, apikey, secret, false, verifyssl, options...)")
 	pn("	return cs")
 	pn("}")
 	pn("")
@@ -303,8 +337,8 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("// this client will wait until the async job is finished or until the configured AsyncTimeout is reached. When the async")
 	pn("// job finishes successfully it will return actual object received from the API and nil, but when the timout is")
 	pn("// reached it will return the initial object containing the async job ID for the running job and a warning.")
-	pn("func NewAsyncClient(apiurl string, apikey string, secret string, verifyssl bool) *CloudStackClient {")
-	pn("	cs := newClient(apiurl, apikey, secret, true, verifyssl)")
+	pn("func NewAsyncClient(apiurl string, apikey string, secret string, verifyssl bool, options ...ClientOption) *CloudStackClient {")
+	pn("	cs := newClient(apiurl, apikey, secret, true, verifyssl, options...)")
 	pn("	return cs")
 	pn("}")
 	pn("")
@@ -469,6 +503,55 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("	return nil, fmt.Errorf(\"Unable to extract the raw value from:\\n\\n%%s\\n\\n\", string(b))")
 	pn("}")
 	pn("")
+	pn("// WithAsyncTimeout takes a custom timeout to be used by the CloudStackClient")
+	pn("func WithAsyncTimeout(timeout int64) ClientOption {")
+	pn("	return func(cs *CloudStackClient) {")
+	pn("		if timeout != 0 {")
+	pn("			cs.timeout = timeout")
+	pn("		}")
+	pn("	}")
+	pn("}")
+	pn("")
+	pn("// DomainIDSetter is an interface that every type that can set a domain ID must implement")
+	pn("type DomainIDSetter interface {")
+	pn("	SetDomainid(string)")
+	pn("}")
+	pn("")
+	pn("// WithDomain takes either a domain name or ID and sets the `domainid` parameter")
+	pn("func WithDomain(domain string) OptionFunc {")
+	pn("	return func(cs *CloudStackClient, p interface{}) error {")
+	pn("		ps, ok := p.(DomainIDSetter)")
+	pn("")
+	pn(" 		if !ok || domain == \"\" {")
+	pn("			return nil")
+	pn("		}")
+	pn("")
+	pn(" 		if !IsID(domain) {")
+	pn("			id, _, err := cs.Domain.GetDomainID(domain)")
+	pn("			if err != nil {")
+	pn("				return err")
+	pn("			}")
+	pn("			domain = id")
+	pn("		}")
+	pn("")
+	pn(" 		ps.SetDomainid(domain)")
+	pn("")
+	pn(" 		return nil")
+	pn("	}")
+	pn("}")
+	pn("")
+	pn("// WithHTTPClient takes a custom HTTP client to be used by the CloudStackClient")
+	pn("func WithHTTPClient(client *http.Client) ClientOption {")
+	pn("	return func(cs *CloudStackClient) {")
+	pn("		if client != nil {")
+	pn("			if client.Jar == nil {")
+	pn("				client.Jar = cs.client.Jar")
+	pn("			}")
+	pn("			cs.client = client")
+	pn("		}")
+	pn("	}")
+	pn("}")
+	pn("")
 	pn("// ProjectIDSetter is an interface that every type that can set a project ID must implement")
 	pn("type ProjectIDSetter interface {")
 	pn("	SetProjectid(string)")
@@ -512,6 +595,34 @@ func (as *allServices) GeneralCode() ([]byte, error) {
 	pn("		}")
 	pn("")
 	pn("		vs.SetVpcid(id)")
+	pn("")
+	pn("		return nil")
+	pn("	}")
+	pn("}")
+	pn("")
+	pn("// ZoneIDSetter is an interface that every type that can set a zone ID must implement")
+	pn("type ZoneIDSetter interface {")
+	pn("	SetZoneid(string)")
+	pn("}")
+	pn("")
+	pn("// WithZone takes either a zone name or ID and sets the `zoneid` parameter")
+	pn("func WithZone(zone string) OptionFunc {")
+	pn("	return func(cs *CloudStackClient, p interface{}) error {")
+	pn("		zs, ok := p.(ZoneIDSetter)")
+	pn("")
+	pn("		if !ok || zone == \"\" {")
+	pn("			return nil")
+	pn("		}")
+	pn("")
+	pn("		if !IsID(zone) {")
+	pn("			id, _, err := cs.Zone.GetZoneID(zone)")
+	pn("			if err != nil {")
+	pn("				return err")
+	pn("			}")
+	pn("			zone = id")
+	pn("		}")
+	pn("")
+	pn("		zs.SetZoneid(zone)")
 	pn("")
 	pn("		return nil")
 	pn("	}")
@@ -759,7 +870,7 @@ func (s *service) generateToURLValuesFunc(a *API) {
 	pn("	}")
 	for _, ap := range a.Params {
 		pn("	if v, found := p.p[\"%s\"]; found {", ap.Name)
-		s.generateConvertCode(ap.Name, mapType(ap.Type))
+		s.generateConvertCode(a.Name, ap.Name, mapType(ap.Type))
 		pn("	}")
 	}
 	pn("	return u")
@@ -768,7 +879,7 @@ func (s *service) generateToURLValuesFunc(a *API) {
 	return
 }
 
-func (s *service) generateConvertCode(name, typ string) {
+func (s *service) generateConvertCode(cmd, name, typ string) {
 	pn := s.pn
 
 	switch typ {
@@ -791,7 +902,12 @@ func (s *service) generateConvertCode(name, typ string) {
 		pn("for k, vv := range v.(map[string]string) {")
 		switch name {
 		case "details":
-			pn("	u.Set(fmt.Sprintf(\"%s[%%d].%%s\", i, k), vv)", name)
+			if detailsRequireKeyValue[cmd] {
+				pn("	u.Set(fmt.Sprintf(\"%s[%%d].key\", i), k)", name)
+				pn("	u.Set(fmt.Sprintf(\"%s[%%d].value\", i), vv)", name)
+			} else {
+				pn("	u.Set(fmt.Sprintf(\"%s[%%d].%%s\", i, k), vv)", name)
+			}
 		case "serviceproviderlist":
 			pn("	u.Set(fmt.Sprintf(\"%s[%%d].service\", i), k)", name)
 			pn("	u.Set(fmt.Sprintf(\"%s[%%d].provider\", i), vv)", name)
@@ -1132,7 +1248,17 @@ func (s *service) generateNewAPICallFunc(a *API) {
 	pn("	}")
 	pn("")
 	switch n {
-	case "CreateAccount", "CreateUser", "RegisterUserKeys", "CreateNetwork", "CreateNetworkOffering", "CreateSecurityGroup", "CreateServiceOffering", "CreateSSHKeyPair", "RegisterSSHKeyPair":
+	case
+		"CreateAccount",
+		"CreateNetwork",
+		"CreateNetworkOffering",
+		"CreateSSHKeyPair",
+		"CreateSecurityGroup",
+		"CreateServiceOffering",
+		"CreateUser",
+		"GetVirtualMachineUserData",
+		"RegisterSSHKeyPair",
+		"RegisterUserKeys":
 		pn("	if resp, err = getRawValue(resp); err != nil {")
 		pn("		return nil, err")
 		pn("	}")
@@ -1220,8 +1346,8 @@ func (s *service) generateResponseType(a *API) {
 	tn := capitalize(strings.TrimPrefix(a.Name, "configure") + "Response")
 	ln := capitalize(strings.TrimPrefix(a.Name, "list"))
 
-	// If this is a 'list' response, we need an seperate list struct. There seem to be other
-	// types of responses that also need a seperate list struct, so checking on exact matches
+	// If this is a 'list' response, we need an separate list struct. There seem to be other
+	// types of responses that also need a separate list struct, so checking on exact matches
 	// for those once.
 	if strings.HasPrefix(a.Name, "list") || a.Name == "registerTemplate" {
 		pn("type %s struct {", tn)
@@ -1246,14 +1372,8 @@ func (s *service) generateResponseType(a *API) {
 		tn = parseSingular(ln)
 	}
 
-	pn("type %s struct {", tn)
-	if a.Isasync {
-		pn("	JobID string `json:\"jobid\"`")
-	}
 	sort.Sort(a.Response)
-	customMarshal := s.recusiveGenerateResponseType(a.Response, a.Isasync, false)
-	pn("}")
-	pn("")
+	customMarshal := s.recusiveGenerateResponseType(tn, a.Response, a.Isasync)
 
 	if customMarshal {
 		pn("func (r *%s) UnmarshalJSON(b []byte) error {", tn)
@@ -1265,6 +1385,14 @@ func (s *service) generateResponseType(a *API) {
 		pn("")
 		pn("	if success, ok := m[\"success\"].(string); ok {")
 		pn("		m[\"success\"] = success == \"true\"")
+		pn("		b, err = json.Marshal(m)")
+		pn("		if err != nil {")
+		pn("			return err")
+		pn("		}")
+		pn("	}")
+		pn("")
+		pn("	if ostypeid, ok := m[\"ostypeid\"].(float64); ok {")
+		pn("		m[\"ostypeid\"] = strconv.Itoa(int(ostypeid))")
 		pn("		b, err = json.Marshal(m)")
 		pn("		if err != nil {")
 		pn("			return err")
@@ -1288,9 +1416,12 @@ func parseSingular(n string) string {
 	return strings.TrimSuffix(n, "s")
 }
 
-func (s *service) recusiveGenerateResponseType(resp APIResponses, async, customMarshal bool) bool {
+func (s *service) recusiveGenerateResponseType(tn string, resp APIResponses, async bool) bool {
 	pn := s.pn
+	customMarshal := false
 	found := make(map[string]bool)
+
+	pn("type %s struct {", tn)
 
 	for _, r := range resp {
 		if r.Name == "" {
@@ -1298,25 +1429,32 @@ func (s *service) recusiveGenerateResponseType(resp APIResponses, async, customM
 		}
 		if r.Name == "secondaryip" {
 			pn("%s []struct {", capitalize(r.Name))
-			pn("Id string `json:\"id\"`")
-			pn("Ipaddress string `json:\"ipaddress\"`")
+			pn("	Id string `json:\"id\"`")
+			pn("	Ipaddress string `json:\"ipaddress\"`")
 			pn("} `json:\"%s\"`", r.Name)
 			continue
 		}
 		if r.Response != nil {
-			pn("%s []struct {", capitalize(r.Name))
 			sort.Sort(r.Response)
-			customMarshal = s.recusiveGenerateResponseType(r.Response, async, customMarshal)
-			pn("} `json:\"%s\"`", r.Name)
+			typeName, create := getUniqueTypeName(tn, r.Name)
+			pn("%s []%s `json:\"%s\"`", capitalize(r.Name), typeName, r.Name)
+			if create {
+				defer s.recusiveGenerateResponseType(typeName, r.Response, false)
+			}
 		} else {
 			if !found[r.Name] {
-				// This code is needed because the response field is different for sync and async calls :(
-				if r.Name == "success" {
+				switch r.Name {
+				case "success":
+					// This case is because the response field is different for sync and async calls :(
 					pn("%s bool `json:\"%s\"`", capitalize(r.Name), r.Name)
 					if !async {
 						customMarshal = true
 					}
-				} else {
+				case "ostypeid":
+					// This case is needed for backwards compatibility.
+					pn("%s string `json:\"%s\"`", capitalize(r.Name), r.Name)
+					customMarshal = true
+				default:
 					pn("%s %s `json:\"%s\"`", capitalize(r.Name), mapType(r.Type), r.Name)
 				}
 				found[r.Name] = true
@@ -1324,7 +1462,38 @@ func (s *service) recusiveGenerateResponseType(resp APIResponses, async, customM
 		}
 	}
 
+	pn("}")
+	pn("")
+
 	return customMarshal
+}
+
+func getUniqueTypeName(prefix, name string) (string, bool) {
+	// We have special cases for [in|e]gressrules, nics and tags as the exact
+	// sames types are used used in multiple different locations.
+	switch {
+	case strings.HasSuffix(name, "gressrule"):
+		name = "rule"
+	case strings.HasSuffix(name, "nic"):
+		prefix = ""
+		name = "nic"
+	case strings.HasSuffix(name, "tags"):
+		prefix = ""
+		name = "tags"
+	}
+
+	tn := prefix + capitalize(name)
+	if !typeNames[tn] {
+		typeNames[tn] = true
+		return tn, true
+	}
+
+	// Return here as this means the type already exists.
+	if name == "rule" || name == "nic" || name == "tags" {
+		return tn, false
+	}
+
+	return getUniqueTypeName(prefix, name+"Internal")
 }
 
 func getAllServices(listApis string) (*allServices, []error, error) {
@@ -1338,6 +1507,7 @@ func getAllServices(listApis string) (*allServices, []error, error) {
 	as := &allServices{}
 	errors := []error{}
 	for sn, apis := range layout {
+		typeNames[sn] = true
 		s := &service{name: sn}
 		for _, api := range apis {
 			a, found := ai[api]
@@ -1355,8 +1525,8 @@ func getAllServices(listApis string) (*allServices, []error, error) {
 
 	// Add an extra field to enable adding a custom service
 	as.services = append(as.services, &service{name: "CustomService"})
-
 	sort.Sort(as.services)
+
 	return as, errors, nil
 }
 
@@ -1403,6 +1573,8 @@ func mapType(t string) string {
 		return "int"
 	case "long":
 		return "int64"
+	case "float":
+		return "float64"
 	case "list":
 		return "[]string"
 	case "map":
@@ -1422,6 +1594,9 @@ func mapType(t string) string {
 }
 
 func capitalize(s string) string {
+	if s == "jobid" {
+		return "JobID"
+	}
 	r := []rune(s)
 	r[0] = unicode.ToUpper(r[0])
 	return string(r)

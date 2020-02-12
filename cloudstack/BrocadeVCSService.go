@@ -127,9 +127,10 @@ func (s *BrocadeVCSService) AddBrocadeVcsDevice(p *AddBrocadeVcsDeviceParams) (*
 }
 
 type AddBrocadeVcsDeviceResponse struct {
-	JobID             string `json:"jobid"`
 	Brocadedevicename string `json:"brocadedevicename"`
 	Hostname          string `json:"hostname"`
+	JobID             string `json:"jobid"`
+	Jobstatus         int    `json:"jobstatus"`
 	Physicalnetworkid string `json:"physicalnetworkid"`
 	Provider          string `json:"provider"`
 	Vcsdeviceid       string `json:"vcsdeviceid"`
@@ -198,8 +199,9 @@ func (s *BrocadeVCSService) DeleteBrocadeVcsDevice(p *DeleteBrocadeVcsDevicePara
 }
 
 type DeleteBrocadeVcsDeviceResponse struct {
-	JobID       string `json:"jobid"`
 	Displaytext string `json:"displaytext"`
+	JobID       string `json:"jobid"`
+	Jobstatus   int    `json:"jobstatus"`
 	Success     bool   `json:"success"`
 }
 
@@ -328,81 +330,80 @@ type ListBrocadeVcsDeviceNetworksResponse struct {
 }
 
 type BrocadeVcsDeviceNetwork struct {
-	Account                     string `json:"account"`
-	Aclid                       string `json:"aclid"`
-	Acltype                     string `json:"acltype"`
-	Broadcastdomaintype         string `json:"broadcastdomaintype"`
-	Broadcasturi                string `json:"broadcasturi"`
-	Canusefordeploy             bool   `json:"canusefordeploy"`
-	Cidr                        string `json:"cidr"`
-	Displaynetwork              bool   `json:"displaynetwork"`
-	Displaytext                 string `json:"displaytext"`
-	Dns1                        string `json:"dns1"`
-	Dns2                        string `json:"dns2"`
-	Domain                      string `json:"domain"`
-	Domainid                    string `json:"domainid"`
-	Gateway                     string `json:"gateway"`
-	Id                          string `json:"id"`
-	Ip6cidr                     string `json:"ip6cidr"`
-	Ip6gateway                  string `json:"ip6gateway"`
-	Isdefault                   bool   `json:"isdefault"`
-	Ispersistent                bool   `json:"ispersistent"`
-	Issystem                    bool   `json:"issystem"`
-	Name                        string `json:"name"`
-	Netmask                     string `json:"netmask"`
-	Networkcidr                 string `json:"networkcidr"`
-	Networkdomain               string `json:"networkdomain"`
-	Networkofferingavailability string `json:"networkofferingavailability"`
-	Networkofferingconservemode bool   `json:"networkofferingconservemode"`
-	Networkofferingdisplaytext  string `json:"networkofferingdisplaytext"`
-	Networkofferingid           string `json:"networkofferingid"`
-	Networkofferingname         string `json:"networkofferingname"`
-	Physicalnetworkid           string `json:"physicalnetworkid"`
-	Project                     string `json:"project"`
-	Projectid                   string `json:"projectid"`
-	Related                     string `json:"related"`
-	Reservediprange             string `json:"reservediprange"`
-	Restartrequired             bool   `json:"restartrequired"`
-	Service                     []struct {
-		Capability []struct {
-			Canchooseservicecapability bool   `json:"canchooseservicecapability"`
-			Name                       string `json:"name"`
-			Value                      string `json:"value"`
-		} `json:"capability"`
-		Name     string `json:"name"`
-		Provider []struct {
-			Canenableindividualservice   bool     `json:"canenableindividualservice"`
-			Destinationphysicalnetworkid string   `json:"destinationphysicalnetworkid"`
-			Id                           string   `json:"id"`
-			Name                         string   `json:"name"`
-			Physicalnetworkid            string   `json:"physicalnetworkid"`
-			Servicelist                  []string `json:"servicelist"`
-			State                        string   `json:"state"`
-		} `json:"provider"`
-	} `json:"service"`
-	Specifyipranges  bool   `json:"specifyipranges"`
-	State            string `json:"state"`
-	Strechedl2subnet bool   `json:"strechedl2subnet"`
-	Subdomainaccess  bool   `json:"subdomainaccess"`
-	Tags             []struct {
-		Account      string `json:"account"`
-		Customer     string `json:"customer"`
-		Domain       string `json:"domain"`
-		Domainid     string `json:"domainid"`
-		Key          string `json:"key"`
-		Project      string `json:"project"`
-		Projectid    string `json:"projectid"`
-		Resourceid   string `json:"resourceid"`
-		Resourcetype string `json:"resourcetype"`
-		Value        string `json:"value"`
-	} `json:"tags"`
-	Traffictype       string        `json:"traffictype"`
-	Type              string        `json:"type"`
-	Vlan              string        `json:"vlan"`
-	Vpcid             string        `json:"vpcid"`
-	Zoneid            string        `json:"zoneid"`
-	Zonename          string        `json:"zonename"`
-	Zonesnetworkspans []interface{} `json:"zonesnetworkspans"`
+	Account                     string                           `json:"account"`
+	Aclid                       string                           `json:"aclid"`
+	Acltype                     string                           `json:"acltype"`
+	Broadcastdomaintype         string                           `json:"broadcastdomaintype"`
+	Broadcasturi                string                           `json:"broadcasturi"`
+	Canusefordeploy             bool                             `json:"canusefordeploy"`
+	Cidr                        string                           `json:"cidr"`
+	Displaynetwork              bool                             `json:"displaynetwork"`
+	Displaytext                 string                           `json:"displaytext"`
+	Dns1                        string                           `json:"dns1"`
+	Dns2                        string                           `json:"dns2"`
+	Domain                      string                           `json:"domain"`
+	Domainid                    string                           `json:"domainid"`
+	Externalid                  string                           `json:"externalid"`
+	Gateway                     string                           `json:"gateway"`
+	Id                          string                           `json:"id"`
+	Ip6cidr                     string                           `json:"ip6cidr"`
+	Ip6gateway                  string                           `json:"ip6gateway"`
+	Isdefault                   bool                             `json:"isdefault"`
+	Ispersistent                bool                             `json:"ispersistent"`
+	Issystem                    bool                             `json:"issystem"`
+	JobID                       string                           `json:"jobid"`
+	Jobstatus                   int                              `json:"jobstatus"`
+	Name                        string                           `json:"name"`
+	Netmask                     string                           `json:"netmask"`
+	Networkcidr                 string                           `json:"networkcidr"`
+	Networkdomain               string                           `json:"networkdomain"`
+	Networkofferingavailability string                           `json:"networkofferingavailability"`
+	Networkofferingconservemode bool                             `json:"networkofferingconservemode"`
+	Networkofferingdisplaytext  string                           `json:"networkofferingdisplaytext"`
+	Networkofferingid           string                           `json:"networkofferingid"`
+	Networkofferingname         string                           `json:"networkofferingname"`
+	Physicalnetworkid           string                           `json:"physicalnetworkid"`
+	Project                     string                           `json:"project"`
+	Projectid                   string                           `json:"projectid"`
+	Redundantrouter             bool                             `json:"redundantrouter"`
+	Related                     string                           `json:"related"`
+	Reservediprange             string                           `json:"reservediprange"`
+	Restartrequired             bool                             `json:"restartrequired"`
+	Service                     []BrocadeVcsDeviceNetworkService `json:"service"`
+	Specifyipranges             bool                             `json:"specifyipranges"`
+	State                       string                           `json:"state"`
+	Strechedl2subnet            bool                             `json:"strechedl2subnet"`
+	Subdomainaccess             bool                             `json:"subdomainaccess"`
+	Tags                        []Tags                           `json:"tags"`
+	Traffictype                 string                           `json:"traffictype"`
+	Type                        string                           `json:"type"`
+	Vlan                        string                           `json:"vlan"`
+	Vpcid                       string                           `json:"vpcid"`
+	Zoneid                      string                           `json:"zoneid"`
+	Zonename                    string                           `json:"zonename"`
+	Zonesnetworkspans           []interface{}                    `json:"zonesnetworkspans"`
+}
+
+type BrocadeVcsDeviceNetworkService struct {
+	Capability []BrocadeVcsDeviceNetworkServiceCapability `json:"capability"`
+	Name       string                                     `json:"name"`
+	Provider   []BrocadeVcsDeviceNetworkServiceProvider   `json:"provider"`
+}
+
+type BrocadeVcsDeviceNetworkServiceProvider struct {
+	Canenableindividualservice   bool     `json:"canenableindividualservice"`
+	Destinationphysicalnetworkid string   `json:"destinationphysicalnetworkid"`
+	Id                           string   `json:"id"`
+	Name                         string   `json:"name"`
+	Physicalnetworkid            string   `json:"physicalnetworkid"`
+	Servicelist                  []string `json:"servicelist"`
+	State                        string   `json:"state"`
+}
+
+type BrocadeVcsDeviceNetworkServiceCapability struct {
+	Canchooseservicecapability bool   `json:"canchooseservicecapability"`
+	Name                       string `json:"name"`
+	Value                      string `json:"value"`
 }
 
 type ListBrocadeVcsDevicesParams struct {
@@ -505,6 +506,8 @@ type ListBrocadeVcsDevicesResponse struct {
 type BrocadeVcsDevice struct {
 	Brocadedevicename string `json:"brocadedevicename"`
 	Hostname          string `json:"hostname"`
+	JobID             string `json:"jobid"`
+	Jobstatus         int    `json:"jobstatus"`
 	Physicalnetworkid string `json:"physicalnetworkid"`
 	Provider          string `json:"provider"`
 	Vcsdeviceid       string `json:"vcsdeviceid"`

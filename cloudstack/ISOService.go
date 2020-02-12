@@ -104,173 +104,140 @@ func (s *ISOService) AttachIso(p *AttachIsoParams) (*AttachIsoResponse, error) {
 }
 
 type AttachIsoResponse struct {
-	JobID         string `json:"jobid"`
-	Account       string `json:"account"`
-	Affinitygroup []struct {
-		Account           string   `json:"account"`
-		Description       string   `json:"description"`
-		Domain            string   `json:"domain"`
-		Domainid          string   `json:"domainid"`
-		Id                string   `json:"id"`
-		Name              string   `json:"name"`
-		Project           string   `json:"project"`
-		Projectid         string   `json:"projectid"`
-		Type              string   `json:"type"`
-		VirtualmachineIds []string `json:"virtualmachineIds"`
-	} `json:"affinitygroup"`
-	Cpunumber             int               `json:"cpunumber"`
-	Cpuspeed              int               `json:"cpuspeed"`
-	Cpuused               string            `json:"cpuused"`
-	Created               string            `json:"created"`
-	Details               map[string]string `json:"details"`
-	Diskioread            int64             `json:"diskioread"`
-	Diskiowrite           int64             `json:"diskiowrite"`
-	Diskkbsread           int64             `json:"diskkbsread"`
-	Diskkbswrite          int64             `json:"diskkbswrite"`
-	Diskofferingid        string            `json:"diskofferingid"`
-	Diskofferingname      string            `json:"diskofferingname"`
-	Displayname           string            `json:"displayname"`
-	Displayvm             bool              `json:"displayvm"`
-	Domain                string            `json:"domain"`
-	Domainid              string            `json:"domainid"`
-	Forvirtualnetwork     bool              `json:"forvirtualnetwork"`
-	Group                 string            `json:"group"`
-	Groupid               string            `json:"groupid"`
-	Guestosid             string            `json:"guestosid"`
-	Haenable              bool              `json:"haenable"`
-	Hostid                string            `json:"hostid"`
-	Hostname              string            `json:"hostname"`
-	Hypervisor            string            `json:"hypervisor"`
-	Id                    string            `json:"id"`
-	Instancename          string            `json:"instancename"`
-	Isdynamicallyscalable bool              `json:"isdynamicallyscalable"`
-	Isodisplaytext        string            `json:"isodisplaytext"`
-	Isoid                 string            `json:"isoid"`
-	Isoname               string            `json:"isoname"`
-	Keypair               string            `json:"keypair"`
-	Memory                int               `json:"memory"`
-	Memoryintfreekbs      int64             `json:"memoryintfreekbs"`
-	Memorykbs             int64             `json:"memorykbs"`
-	Memorytargetkbs       int64             `json:"memorytargetkbs"`
-	Name                  string            `json:"name"`
-	Networkkbsread        int64             `json:"networkkbsread"`
-	Networkkbswrite       int64             `json:"networkkbswrite"`
-	Nic                   []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
-	Ostypeid        int64  `json:"ostypeid"`
-	Password        string `json:"password"`
-	Passwordenabled bool   `json:"passwordenabled"`
-	Project         string `json:"project"`
-	Projectid       string `json:"projectid"`
-	Publicip        string `json:"publicip"`
-	Publicipid      string `json:"publicipid"`
-	Rootdeviceid    int64  `json:"rootdeviceid"`
-	Rootdevicetype  string `json:"rootdevicetype"`
-	Securitygroup   []struct {
-		Account     string `json:"account"`
-		Description string `json:"description"`
-		Domain      string `json:"domain"`
-		Domainid    string `json:"domainid"`
-		Egressrule  []struct {
-			Account           string `json:"account"`
-			Cidr              string `json:"cidr"`
-			Endport           int    `json:"endport"`
-			Icmpcode          int    `json:"icmpcode"`
-			Icmptype          int    `json:"icmptype"`
-			Protocol          string `json:"protocol"`
-			Ruleid            string `json:"ruleid"`
-			Securitygroupname string `json:"securitygroupname"`
-			Startport         int    `json:"startport"`
-			Tags              []struct {
-				Account      string `json:"account"`
-				Customer     string `json:"customer"`
-				Domain       string `json:"domain"`
-				Domainid     string `json:"domainid"`
-				Key          string `json:"key"`
-				Project      string `json:"project"`
-				Projectid    string `json:"projectid"`
-				Resourceid   string `json:"resourceid"`
-				Resourcetype string `json:"resourcetype"`
-				Value        string `json:"value"`
-			} `json:"tags"`
-		} `json:"egressrule"`
-		Id          string `json:"id"`
-		Ingressrule []struct {
-			Account           string `json:"account"`
-			Cidr              string `json:"cidr"`
-			Endport           int    `json:"endport"`
-			Icmpcode          int    `json:"icmpcode"`
-			Icmptype          int    `json:"icmptype"`
-			Protocol          string `json:"protocol"`
-			Ruleid            string `json:"ruleid"`
-			Securitygroupname string `json:"securitygroupname"`
-			Startport         int    `json:"startport"`
-			Tags              []struct {
-				Account      string `json:"account"`
-				Customer     string `json:"customer"`
-				Domain       string `json:"domain"`
-				Domainid     string `json:"domainid"`
-				Key          string `json:"key"`
-				Project      string `json:"project"`
-				Projectid    string `json:"projectid"`
-				Resourceid   string `json:"resourceid"`
-				Resourcetype string `json:"resourcetype"`
-				Value        string `json:"value"`
-			} `json:"tags"`
-		} `json:"ingressrule"`
-		Name      string `json:"name"`
-		Project   string `json:"project"`
-		Projectid string `json:"projectid"`
-		Tags      []struct {
-			Account      string `json:"account"`
-			Customer     string `json:"customer"`
-			Domain       string `json:"domain"`
-			Domainid     string `json:"domainid"`
-			Key          string `json:"key"`
-			Project      string `json:"project"`
-			Projectid    string `json:"projectid"`
-			Resourceid   string `json:"resourceid"`
-			Resourcetype string `json:"resourcetype"`
-			Value        string `json:"value"`
-		} `json:"tags"`
-		Virtualmachinecount int           `json:"virtualmachinecount"`
-		Virtualmachineids   []interface{} `json:"virtualmachineids"`
-	} `json:"securitygroup"`
-	Serviceofferingid   string `json:"serviceofferingid"`
-	Serviceofferingname string `json:"serviceofferingname"`
-	Servicestate        string `json:"servicestate"`
-	State               string `json:"state"`
-	Templatedisplaytext string `json:"templatedisplaytext"`
-	Templateid          string `json:"templateid"`
-	Templatename        string `json:"templatename"`
-	Userid              string `json:"userid"`
-	Username            string `json:"username"`
-	Vgpu                string `json:"vgpu"`
-	Zoneid              string `json:"zoneid"`
-	Zonename            string `json:"zonename"`
+	Account               string                           `json:"account"`
+	Affinitygroup         []AttachIsoResponseAffinitygroup `json:"affinitygroup"`
+	Cpunumber             int                              `json:"cpunumber"`
+	Cpuspeed              int                              `json:"cpuspeed"`
+	Cpuused               string                           `json:"cpuused"`
+	Created               string                           `json:"created"`
+	Details               map[string]string                `json:"details"`
+	Diskioread            int64                            `json:"diskioread"`
+	Diskiowrite           int64                            `json:"diskiowrite"`
+	Diskkbsread           int64                            `json:"diskkbsread"`
+	Diskkbswrite          int64                            `json:"diskkbswrite"`
+	Diskofferingid        string                           `json:"diskofferingid"`
+	Diskofferingname      string                           `json:"diskofferingname"`
+	Displayname           string                           `json:"displayname"`
+	Displayvm             bool                             `json:"displayvm"`
+	Domain                string                           `json:"domain"`
+	Domainid              string                           `json:"domainid"`
+	Forvirtualnetwork     bool                             `json:"forvirtualnetwork"`
+	Group                 string                           `json:"group"`
+	Groupid               string                           `json:"groupid"`
+	Guestosid             string                           `json:"guestosid"`
+	Haenable              bool                             `json:"haenable"`
+	Hostid                string                           `json:"hostid"`
+	Hostname              string                           `json:"hostname"`
+	Hypervisor            string                           `json:"hypervisor"`
+	Id                    string                           `json:"id"`
+	Instancename          string                           `json:"instancename"`
+	Isdynamicallyscalable bool                             `json:"isdynamicallyscalable"`
+	Isodisplaytext        string                           `json:"isodisplaytext"`
+	Isoid                 string                           `json:"isoid"`
+	Isoname               string                           `json:"isoname"`
+	JobID                 string                           `json:"jobid"`
+	Jobstatus             int                              `json:"jobstatus"`
+	Keypair               string                           `json:"keypair"`
+	Memory                int                              `json:"memory"`
+	Memoryintfreekbs      int64                            `json:"memoryintfreekbs"`
+	Memorykbs             int64                            `json:"memorykbs"`
+	Memorytargetkbs       int64                            `json:"memorytargetkbs"`
+	Name                  string                           `json:"name"`
+	Networkkbsread        int64                            `json:"networkkbsread"`
+	Networkkbswrite       int64                            `json:"networkkbswrite"`
+	Nic                   []Nic                            `json:"nic"`
+	Ostypeid              CSOsType                         `json:"ostypeid"`
+	Password              string                           `json:"password"`
+	Passwordenabled       bool                             `json:"passwordenabled"`
+	Project               string                           `json:"project"`
+	Projectid             string                           `json:"projectid"`
+	Publicip              string                           `json:"publicip"`
+	Publicipid            string                           `json:"publicipid"`
+	Rootdeviceid          int64                            `json:"rootdeviceid"`
+	Rootdevicetype        string                           `json:"rootdevicetype"`
+	Securitygroup         []AttachIsoResponseSecuritygroup `json:"securitygroup"`
+	Serviceofferingid     string                           `json:"serviceofferingid"`
+	Serviceofferingname   string                           `json:"serviceofferingname"`
+	Servicestate          string                           `json:"servicestate"`
+	State                 string                           `json:"state"`
+	Tags                  []Tags                           `json:"tags"`
+	Templatedisplaytext   string                           `json:"templatedisplaytext"`
+	Templateid            string                           `json:"templateid"`
+	Templatename          string                           `json:"templatename"`
+	Userid                string                           `json:"userid"`
+	Username              string                           `json:"username"`
+	Vgpu                  string                           `json:"vgpu"`
+	Zoneid                string                           `json:"zoneid"`
+	Zonename              string                           `json:"zonename"`
+}
+
+type AttachIsoResponseSecuritygroup struct {
+	Account             string                               `json:"account"`
+	Description         string                               `json:"description"`
+	Domain              string                               `json:"domain"`
+	Domainid            string                               `json:"domainid"`
+	Egressrule          []AttachIsoResponseSecuritygroupRule `json:"egressrule"`
+	Id                  string                               `json:"id"`
+	Ingressrule         []AttachIsoResponseSecuritygroupRule `json:"ingressrule"`
+	Name                string                               `json:"name"`
+	Project             string                               `json:"project"`
+	Projectid           string                               `json:"projectid"`
+	Tags                []Tags                               `json:"tags"`
+	Virtualmachinecount int                                  `json:"virtualmachinecount"`
+	Virtualmachineids   []interface{}                        `json:"virtualmachineids"`
+}
+
+type AttachIsoResponseSecuritygroupRule struct {
+	Account           string `json:"account"`
+	Cidr              string `json:"cidr"`
+	Endport           int    `json:"endport"`
+	Icmpcode          int    `json:"icmpcode"`
+	Icmptype          int    `json:"icmptype"`
+	Protocol          string `json:"protocol"`
+	Ruleid            string `json:"ruleid"`
+	Securitygroupname string `json:"securitygroupname"`
+	Startport         int    `json:"startport"`
+	Tags              []Tags `json:"tags"`
+}
+
+type AttachIsoResponseAffinitygroup struct {
+	Account           string   `json:"account"`
+	Description       string   `json:"description"`
+	Domain            string   `json:"domain"`
+	Domainid          string   `json:"domainid"`
+	Id                string   `json:"id"`
+	Name              string   `json:"name"`
+	Project           string   `json:"project"`
+	Projectid         string   `json:"projectid"`
+	Type              string   `json:"type"`
+	VirtualmachineIds []string `json:"virtualmachineIds"`
+}
+
+func (r *AttachIsoResponse) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias AttachIsoResponse
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type CopyIsoParams struct {
@@ -284,6 +251,10 @@ func (p *CopyIsoParams) toURLValues() url.Values {
 	}
 	if v, found := p.p["destzoneid"]; found {
 		u.Set("destzoneid", v.(string))
+	}
+	if v, found := p.p["destzoneids"]; found {
+		vv := strings.Join(v.([]string), ",")
+		u.Set("destzoneids", vv)
 	}
 	if v, found := p.p["id"]; found {
 		u.Set("id", v.(string))
@@ -299,6 +270,14 @@ func (p *CopyIsoParams) SetDestzoneid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["destzoneid"] = v
+	return
+}
+
+func (p *CopyIsoParams) SetDestzoneids(v []string) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	p.p["destzoneids"] = v
 	return
 }
 
@@ -320,10 +299,9 @@ func (p *CopyIsoParams) SetSourcezoneid(v string) {
 
 // You should always use this function to get a new CopyIsoParams instance,
 // as then you are sure you have configured all required params
-func (s *ISOService) NewCopyIsoParams(destzoneid string, id string) *CopyIsoParams {
+func (s *ISOService) NewCopyIsoParams(id string) *CopyIsoParams {
 	p := &CopyIsoParams{}
 	p.p = make(map[string]interface{})
-	p.p["destzoneid"] = destzoneid
 	p.p["id"] = id
 	return p
 }
@@ -364,14 +342,16 @@ func (s *ISOService) CopyIso(p *CopyIsoParams) (*CopyIsoResponse, error) {
 }
 
 type CopyIsoResponse struct {
-	JobID                 string            `json:"jobid"`
 	Account               string            `json:"account"`
 	Accountid             string            `json:"accountid"`
+	Bits                  int               `json:"bits"`
 	Bootable              bool              `json:"bootable"`
 	Checksum              string            `json:"checksum"`
+	Childtemplates        []interface{}     `json:"childtemplates"`
 	Created               string            `json:"created"`
 	CrossZones            bool              `json:"crossZones"`
 	Details               map[string]string `json:"details"`
+	Directdownload        bool              `json:"directdownload"`
 	Displaytext           string            `json:"displaytext"`
 	Domain                string            `json:"domain"`
 	Domainid              string            `json:"domainid"`
@@ -385,21 +365,54 @@ type CopyIsoResponse struct {
 	Isfeatured            bool              `json:"isfeatured"`
 	Ispublic              bool              `json:"ispublic"`
 	Isready               bool              `json:"isready"`
+	JobID                 string            `json:"jobid"`
+	Jobstatus             int               `json:"jobstatus"`
 	Name                  string            `json:"name"`
-	Ostypeid              string            `json:"ostypeid"`
+	Ostypeid              CSOsType          `json:"ostypeid"`
 	Ostypename            string            `json:"ostypename"`
+	Parenttemplateid      string            `json:"parenttemplateid"`
 	Passwordenabled       bool              `json:"passwordenabled"`
+	Physicalsize          int64             `json:"physicalsize"`
 	Project               string            `json:"project"`
 	Projectid             string            `json:"projectid"`
 	Removed               string            `json:"removed"`
+	Requireshvm           bool              `json:"requireshvm"`
 	Size                  int64             `json:"size"`
 	Sourcetemplateid      string            `json:"sourcetemplateid"`
 	Sshkeyenabled         bool              `json:"sshkeyenabled"`
 	Status                string            `json:"status"`
+	Tags                  []Tags            `json:"tags"`
 	Templatetag           string            `json:"templatetag"`
 	Templatetype          string            `json:"templatetype"`
 	Zoneid                string            `json:"zoneid"`
 	Zonename              string            `json:"zonename"`
+}
+
+func (r *CopyIsoResponse) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias CopyIsoResponse
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type DeleteIsoParams struct {
@@ -476,8 +489,9 @@ func (s *ISOService) DeleteIso(p *DeleteIsoParams) (*DeleteIsoResponse, error) {
 }
 
 type DeleteIsoResponse struct {
-	JobID       string `json:"jobid"`
 	Displaytext string `json:"displaytext"`
+	JobID       string `json:"jobid"`
+	Jobstatus   int    `json:"jobstatus"`
 	Success     bool   `json:"success"`
 }
 
@@ -549,173 +563,140 @@ func (s *ISOService) DetachIso(p *DetachIsoParams) (*DetachIsoResponse, error) {
 }
 
 type DetachIsoResponse struct {
-	JobID         string `json:"jobid"`
-	Account       string `json:"account"`
-	Affinitygroup []struct {
-		Account           string   `json:"account"`
-		Description       string   `json:"description"`
-		Domain            string   `json:"domain"`
-		Domainid          string   `json:"domainid"`
-		Id                string   `json:"id"`
-		Name              string   `json:"name"`
-		Project           string   `json:"project"`
-		Projectid         string   `json:"projectid"`
-		Type              string   `json:"type"`
-		VirtualmachineIds []string `json:"virtualmachineIds"`
-	} `json:"affinitygroup"`
-	Cpunumber             int               `json:"cpunumber"`
-	Cpuspeed              int               `json:"cpuspeed"`
-	Cpuused               string            `json:"cpuused"`
-	Created               string            `json:"created"`
-	Details               map[string]string `json:"details"`
-	Diskioread            int64             `json:"diskioread"`
-	Diskiowrite           int64             `json:"diskiowrite"`
-	Diskkbsread           int64             `json:"diskkbsread"`
-	Diskkbswrite          int64             `json:"diskkbswrite"`
-	Diskofferingid        string            `json:"diskofferingid"`
-	Diskofferingname      string            `json:"diskofferingname"`
-	Displayname           string            `json:"displayname"`
-	Displayvm             bool              `json:"displayvm"`
-	Domain                string            `json:"domain"`
-	Domainid              string            `json:"domainid"`
-	Forvirtualnetwork     bool              `json:"forvirtualnetwork"`
-	Group                 string            `json:"group"`
-	Groupid               string            `json:"groupid"`
-	Guestosid             string            `json:"guestosid"`
-	Haenable              bool              `json:"haenable"`
-	Hostid                string            `json:"hostid"`
-	Hostname              string            `json:"hostname"`
-	Hypervisor            string            `json:"hypervisor"`
-	Id                    string            `json:"id"`
-	Instancename          string            `json:"instancename"`
-	Isdynamicallyscalable bool              `json:"isdynamicallyscalable"`
-	Isodisplaytext        string            `json:"isodisplaytext"`
-	Isoid                 string            `json:"isoid"`
-	Isoname               string            `json:"isoname"`
-	Keypair               string            `json:"keypair"`
-	Memory                int               `json:"memory"`
-	Memoryintfreekbs      int64             `json:"memoryintfreekbs"`
-	Memorykbs             int64             `json:"memorykbs"`
-	Memorytargetkbs       int64             `json:"memorytargetkbs"`
-	Name                  string            `json:"name"`
-	Networkkbsread        int64             `json:"networkkbsread"`
-	Networkkbswrite       int64             `json:"networkkbswrite"`
-	Nic                   []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
-	Ostypeid        int64  `json:"ostypeid"`
-	Password        string `json:"password"`
-	Passwordenabled bool   `json:"passwordenabled"`
-	Project         string `json:"project"`
-	Projectid       string `json:"projectid"`
-	Publicip        string `json:"publicip"`
-	Publicipid      string `json:"publicipid"`
-	Rootdeviceid    int64  `json:"rootdeviceid"`
-	Rootdevicetype  string `json:"rootdevicetype"`
-	Securitygroup   []struct {
-		Account     string `json:"account"`
-		Description string `json:"description"`
-		Domain      string `json:"domain"`
-		Domainid    string `json:"domainid"`
-		Egressrule  []struct {
-			Account           string `json:"account"`
-			Cidr              string `json:"cidr"`
-			Endport           int    `json:"endport"`
-			Icmpcode          int    `json:"icmpcode"`
-			Icmptype          int    `json:"icmptype"`
-			Protocol          string `json:"protocol"`
-			Ruleid            string `json:"ruleid"`
-			Securitygroupname string `json:"securitygroupname"`
-			Startport         int    `json:"startport"`
-			Tags              []struct {
-				Account      string `json:"account"`
-				Customer     string `json:"customer"`
-				Domain       string `json:"domain"`
-				Domainid     string `json:"domainid"`
-				Key          string `json:"key"`
-				Project      string `json:"project"`
-				Projectid    string `json:"projectid"`
-				Resourceid   string `json:"resourceid"`
-				Resourcetype string `json:"resourcetype"`
-				Value        string `json:"value"`
-			} `json:"tags"`
-		} `json:"egressrule"`
-		Id          string `json:"id"`
-		Ingressrule []struct {
-			Account           string `json:"account"`
-			Cidr              string `json:"cidr"`
-			Endport           int    `json:"endport"`
-			Icmpcode          int    `json:"icmpcode"`
-			Icmptype          int    `json:"icmptype"`
-			Protocol          string `json:"protocol"`
-			Ruleid            string `json:"ruleid"`
-			Securitygroupname string `json:"securitygroupname"`
-			Startport         int    `json:"startport"`
-			Tags              []struct {
-				Account      string `json:"account"`
-				Customer     string `json:"customer"`
-				Domain       string `json:"domain"`
-				Domainid     string `json:"domainid"`
-				Key          string `json:"key"`
-				Project      string `json:"project"`
-				Projectid    string `json:"projectid"`
-				Resourceid   string `json:"resourceid"`
-				Resourcetype string `json:"resourcetype"`
-				Value        string `json:"value"`
-			} `json:"tags"`
-		} `json:"ingressrule"`
-		Name      string `json:"name"`
-		Project   string `json:"project"`
-		Projectid string `json:"projectid"`
-		Tags      []struct {
-			Account      string `json:"account"`
-			Customer     string `json:"customer"`
-			Domain       string `json:"domain"`
-			Domainid     string `json:"domainid"`
-			Key          string `json:"key"`
-			Project      string `json:"project"`
-			Projectid    string `json:"projectid"`
-			Resourceid   string `json:"resourceid"`
-			Resourcetype string `json:"resourcetype"`
-			Value        string `json:"value"`
-		} `json:"tags"`
-		Virtualmachinecount int           `json:"virtualmachinecount"`
-		Virtualmachineids   []interface{} `json:"virtualmachineids"`
-	} `json:"securitygroup"`
-	Serviceofferingid   string `json:"serviceofferingid"`
-	Serviceofferingname string `json:"serviceofferingname"`
-	Servicestate        string `json:"servicestate"`
-	State               string `json:"state"`
-	Templatedisplaytext string `json:"templatedisplaytext"`
-	Templateid          string `json:"templateid"`
-	Templatename        string `json:"templatename"`
-	Userid              string `json:"userid"`
-	Username            string `json:"username"`
-	Vgpu                string `json:"vgpu"`
-	Zoneid              string `json:"zoneid"`
-	Zonename            string `json:"zonename"`
+	Account               string                           `json:"account"`
+	Affinitygroup         []DetachIsoResponseAffinitygroup `json:"affinitygroup"`
+	Cpunumber             int                              `json:"cpunumber"`
+	Cpuspeed              int                              `json:"cpuspeed"`
+	Cpuused               string                           `json:"cpuused"`
+	Created               string                           `json:"created"`
+	Details               map[string]string                `json:"details"`
+	Diskioread            int64                            `json:"diskioread"`
+	Diskiowrite           int64                            `json:"diskiowrite"`
+	Diskkbsread           int64                            `json:"diskkbsread"`
+	Diskkbswrite          int64                            `json:"diskkbswrite"`
+	Diskofferingid        string                           `json:"diskofferingid"`
+	Diskofferingname      string                           `json:"diskofferingname"`
+	Displayname           string                           `json:"displayname"`
+	Displayvm             bool                             `json:"displayvm"`
+	Domain                string                           `json:"domain"`
+	Domainid              string                           `json:"domainid"`
+	Forvirtualnetwork     bool                             `json:"forvirtualnetwork"`
+	Group                 string                           `json:"group"`
+	Groupid               string                           `json:"groupid"`
+	Guestosid             string                           `json:"guestosid"`
+	Haenable              bool                             `json:"haenable"`
+	Hostid                string                           `json:"hostid"`
+	Hostname              string                           `json:"hostname"`
+	Hypervisor            string                           `json:"hypervisor"`
+	Id                    string                           `json:"id"`
+	Instancename          string                           `json:"instancename"`
+	Isdynamicallyscalable bool                             `json:"isdynamicallyscalable"`
+	Isodisplaytext        string                           `json:"isodisplaytext"`
+	Isoid                 string                           `json:"isoid"`
+	Isoname               string                           `json:"isoname"`
+	JobID                 string                           `json:"jobid"`
+	Jobstatus             int                              `json:"jobstatus"`
+	Keypair               string                           `json:"keypair"`
+	Memory                int                              `json:"memory"`
+	Memoryintfreekbs      int64                            `json:"memoryintfreekbs"`
+	Memorykbs             int64                            `json:"memorykbs"`
+	Memorytargetkbs       int64                            `json:"memorytargetkbs"`
+	Name                  string                           `json:"name"`
+	Networkkbsread        int64                            `json:"networkkbsread"`
+	Networkkbswrite       int64                            `json:"networkkbswrite"`
+	Nic                   []Nic                            `json:"nic"`
+	Ostypeid              CSOsType                         `json:"ostypeid"`
+	Password              string                           `json:"password"`
+	Passwordenabled       bool                             `json:"passwordenabled"`
+	Project               string                           `json:"project"`
+	Projectid             string                           `json:"projectid"`
+	Publicip              string                           `json:"publicip"`
+	Publicipid            string                           `json:"publicipid"`
+	Rootdeviceid          int64                            `json:"rootdeviceid"`
+	Rootdevicetype        string                           `json:"rootdevicetype"`
+	Securitygroup         []DetachIsoResponseSecuritygroup `json:"securitygroup"`
+	Serviceofferingid     string                           `json:"serviceofferingid"`
+	Serviceofferingname   string                           `json:"serviceofferingname"`
+	Servicestate          string                           `json:"servicestate"`
+	State                 string                           `json:"state"`
+	Tags                  []Tags                           `json:"tags"`
+	Templatedisplaytext   string                           `json:"templatedisplaytext"`
+	Templateid            string                           `json:"templateid"`
+	Templatename          string                           `json:"templatename"`
+	Userid                string                           `json:"userid"`
+	Username              string                           `json:"username"`
+	Vgpu                  string                           `json:"vgpu"`
+	Zoneid                string                           `json:"zoneid"`
+	Zonename              string                           `json:"zonename"`
+}
+
+type DetachIsoResponseSecuritygroup struct {
+	Account             string                               `json:"account"`
+	Description         string                               `json:"description"`
+	Domain              string                               `json:"domain"`
+	Domainid            string                               `json:"domainid"`
+	Egressrule          []DetachIsoResponseSecuritygroupRule `json:"egressrule"`
+	Id                  string                               `json:"id"`
+	Ingressrule         []DetachIsoResponseSecuritygroupRule `json:"ingressrule"`
+	Name                string                               `json:"name"`
+	Project             string                               `json:"project"`
+	Projectid           string                               `json:"projectid"`
+	Tags                []Tags                               `json:"tags"`
+	Virtualmachinecount int                                  `json:"virtualmachinecount"`
+	Virtualmachineids   []interface{}                        `json:"virtualmachineids"`
+}
+
+type DetachIsoResponseSecuritygroupRule struct {
+	Account           string `json:"account"`
+	Cidr              string `json:"cidr"`
+	Endport           int    `json:"endport"`
+	Icmpcode          int    `json:"icmpcode"`
+	Icmptype          int    `json:"icmptype"`
+	Protocol          string `json:"protocol"`
+	Ruleid            string `json:"ruleid"`
+	Securitygroupname string `json:"securitygroupname"`
+	Startport         int    `json:"startport"`
+	Tags              []Tags `json:"tags"`
+}
+
+type DetachIsoResponseAffinitygroup struct {
+	Account           string   `json:"account"`
+	Description       string   `json:"description"`
+	Domain            string   `json:"domain"`
+	Domainid          string   `json:"domainid"`
+	Id                string   `json:"id"`
+	Name              string   `json:"name"`
+	Project           string   `json:"project"`
+	Projectid         string   `json:"projectid"`
+	Type              string   `json:"type"`
+	VirtualmachineIds []string `json:"virtualmachineIds"`
+}
+
+func (r *DetachIsoResponse) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias DetachIsoResponse
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type ExtractIsoParams struct {
@@ -820,12 +801,13 @@ func (s *ISOService) ExtractIso(p *ExtractIsoParams) (*ExtractIsoResponse, error
 }
 
 type ExtractIsoResponse struct {
-	JobID            string `json:"jobid"`
 	Accountid        string `json:"accountid"`
 	Created          string `json:"created"`
 	ExtractId        string `json:"extractId"`
 	ExtractMode      string `json:"extractMode"`
 	Id               string `json:"id"`
+	JobID            string `json:"jobid"`
+	Jobstatus        int    `json:"jobstatus"`
 	Name             string `json:"name"`
 	Resultstring     string `json:"resultstring"`
 	State            string `json:"state"`
@@ -902,7 +884,7 @@ func (s *ISOService) GetIsoPermissionByID(id string, opts ...OptionFunc) (*IsoPe
 	return nil, l.Count, fmt.Errorf("There is more then one result for IsoPermission UUID: %s!", id)
 }
 
-// List ISO visibility and all accounts that have permissions to view this ISO.
+// List iso visibility and all accounts that have permissions to view this iso.
 func (s *ISOService) ListIsoPermissions(p *ListIsoPermissionsParams) (*ListIsoPermissionsResponse, error) {
 	resp, err := s.cs.newRequest("listIsoPermissions", p.toURLValues())
 	if err != nil {
@@ -927,6 +909,8 @@ type IsoPermission struct {
 	Domainid   string   `json:"domainid"`
 	Id         string   `json:"id"`
 	Ispublic   bool     `json:"ispublic"`
+	JobID      string   `json:"jobid"`
+	Jobstatus  int      `json:"jobstatus"`
 	Projectids []string `json:"projectids"`
 }
 
@@ -1269,11 +1253,14 @@ type ListIsosResponse struct {
 type Iso struct {
 	Account               string            `json:"account"`
 	Accountid             string            `json:"accountid"`
+	Bits                  int               `json:"bits"`
 	Bootable              bool              `json:"bootable"`
 	Checksum              string            `json:"checksum"`
+	Childtemplates        []interface{}     `json:"childtemplates"`
 	Created               string            `json:"created"`
 	CrossZones            bool              `json:"crossZones"`
 	Details               map[string]string `json:"details"`
+	Directdownload        bool              `json:"directdownload"`
 	Displaytext           string            `json:"displaytext"`
 	Domain                string            `json:"domain"`
 	Domainid              string            `json:"domainid"`
@@ -1287,21 +1274,54 @@ type Iso struct {
 	Isfeatured            bool              `json:"isfeatured"`
 	Ispublic              bool              `json:"ispublic"`
 	Isready               bool              `json:"isready"`
+	JobID                 string            `json:"jobid"`
+	Jobstatus             int               `json:"jobstatus"`
 	Name                  string            `json:"name"`
-	Ostypeid              string            `json:"ostypeid"`
+	Ostypeid              CSOsType          `json:"ostypeid"`
 	Ostypename            string            `json:"ostypename"`
+	Parenttemplateid      string            `json:"parenttemplateid"`
 	Passwordenabled       bool              `json:"passwordenabled"`
+	Physicalsize          int64             `json:"physicalsize"`
 	Project               string            `json:"project"`
 	Projectid             string            `json:"projectid"`
 	Removed               string            `json:"removed"`
+	Requireshvm           bool              `json:"requireshvm"`
 	Size                  int64             `json:"size"`
 	Sourcetemplateid      string            `json:"sourcetemplateid"`
 	Sshkeyenabled         bool              `json:"sshkeyenabled"`
 	Status                string            `json:"status"`
+	Tags                  []Tags            `json:"tags"`
 	Templatetag           string            `json:"templatetag"`
 	Templatetype          string            `json:"templatetype"`
 	Zoneid                string            `json:"zoneid"`
 	Zonename              string            `json:"zonename"`
+}
+
+func (r *Iso) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias Iso
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type RegisterIsoParams struct {
@@ -1322,6 +1342,10 @@ func (p *RegisterIsoParams) toURLValues() url.Values {
 	}
 	if v, found := p.p["checksum"]; found {
 		u.Set("checksum", v.(string))
+	}
+	if v, found := p.p["directdownload"]; found {
+		vv := strconv.FormatBool(v.(bool))
+		u.Set("directdownload", vv)
 	}
 	if v, found := p.p["displaytext"]; found {
 		u.Set("displaytext", v.(string))
@@ -1353,6 +1377,10 @@ func (p *RegisterIsoParams) toURLValues() url.Values {
 	}
 	if v, found := p.p["ostypeid"]; found {
 		u.Set("ostypeid", v.(string))
+	}
+	if v, found := p.p["passwordenabled"]; found {
+		vv := strconv.FormatBool(v.(bool))
+		u.Set("passwordenabled", vv)
 	}
 	if v, found := p.p["projectid"]; found {
 		u.Set("projectid", v.(string))
@@ -1387,6 +1415,14 @@ func (p *RegisterIsoParams) SetChecksum(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["checksum"] = v
+	return
+}
+
+func (p *RegisterIsoParams) SetDirectdownload(v bool) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	p.p["directdownload"] = v
 	return
 }
 
@@ -1462,6 +1498,14 @@ func (p *RegisterIsoParams) SetOstypeid(v string) {
 	return
 }
 
+func (p *RegisterIsoParams) SetPasswordenabled(v bool) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	p.p["passwordenabled"] = v
+	return
+}
+
 func (p *RegisterIsoParams) SetProjectid(v string) {
 	if p.p == nil {
 		p.p = make(map[string]interface{})
@@ -1516,11 +1560,14 @@ func (s *ISOService) RegisterIso(p *RegisterIsoParams) (*RegisterIsoResponse, er
 type RegisterIsoResponse struct {
 	Account               string            `json:"account"`
 	Accountid             string            `json:"accountid"`
+	Bits                  int               `json:"bits"`
 	Bootable              bool              `json:"bootable"`
 	Checksum              string            `json:"checksum"`
+	Childtemplates        []interface{}     `json:"childtemplates"`
 	Created               string            `json:"created"`
 	CrossZones            bool              `json:"crossZones"`
 	Details               map[string]string `json:"details"`
+	Directdownload        bool              `json:"directdownload"`
 	Displaytext           string            `json:"displaytext"`
 	Domain                string            `json:"domain"`
 	Domainid              string            `json:"domainid"`
@@ -1534,21 +1581,54 @@ type RegisterIsoResponse struct {
 	Isfeatured            bool              `json:"isfeatured"`
 	Ispublic              bool              `json:"ispublic"`
 	Isready               bool              `json:"isready"`
+	JobID                 string            `json:"jobid"`
+	Jobstatus             int               `json:"jobstatus"`
 	Name                  string            `json:"name"`
-	Ostypeid              string            `json:"ostypeid"`
+	Ostypeid              CSOsType          `json:"ostypeid"`
 	Ostypename            string            `json:"ostypename"`
+	Parenttemplateid      string            `json:"parenttemplateid"`
 	Passwordenabled       bool              `json:"passwordenabled"`
+	Physicalsize          int64             `json:"physicalsize"`
 	Project               string            `json:"project"`
 	Projectid             string            `json:"projectid"`
 	Removed               string            `json:"removed"`
+	Requireshvm           bool              `json:"requireshvm"`
 	Size                  int64             `json:"size"`
 	Sourcetemplateid      string            `json:"sourcetemplateid"`
 	Sshkeyenabled         bool              `json:"sshkeyenabled"`
 	Status                string            `json:"status"`
+	Tags                  []Tags            `json:"tags"`
 	Templatetag           string            `json:"templatetag"`
 	Templatetype          string            `json:"templatetype"`
 	Zoneid                string            `json:"zoneid"`
 	Zonename              string            `json:"zonename"`
+}
+
+func (r *RegisterIsoResponse) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias RegisterIsoResponse
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type UpdateIsoParams struct {
@@ -1563,6 +1643,10 @@ func (p *UpdateIsoParams) toURLValues() url.Values {
 	if v, found := p.p["bootable"]; found {
 		vv := strconv.FormatBool(v.(bool))
 		u.Set("bootable", vv)
+	}
+	if v, found := p.p["cleanupdetails"]; found {
+		vv := strconv.FormatBool(v.(bool))
+		u.Set("cleanupdetails", vv)
 	}
 	if v, found := p.p["details"]; found {
 		i := 0
@@ -1606,6 +1690,10 @@ func (p *UpdateIsoParams) toURLValues() url.Values {
 		vv := strconv.Itoa(v.(int))
 		u.Set("sortkey", vv)
 	}
+	if v, found := p.p["sshkeyenabled"]; found {
+		vv := strconv.FormatBool(v.(bool))
+		u.Set("sshkeyenabled", vv)
+	}
 	return u
 }
 
@@ -1614,6 +1702,14 @@ func (p *UpdateIsoParams) SetBootable(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["bootable"] = v
+	return
+}
+
+func (p *UpdateIsoParams) SetCleanupdetails(v bool) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	p.p["cleanupdetails"] = v
 	return
 }
 
@@ -1705,6 +1801,14 @@ func (p *UpdateIsoParams) SetSortkey(v int) {
 	return
 }
 
+func (p *UpdateIsoParams) SetSshkeyenabled(v bool) {
+	if p.p == nil {
+		p.p = make(map[string]interface{})
+	}
+	p.p["sshkeyenabled"] = v
+	return
+}
+
 // You should always use this function to get a new UpdateIsoParams instance,
 // as then you are sure you have configured all required params
 func (s *ISOService) NewUpdateIsoParams(id string) *UpdateIsoParams {
@@ -1732,11 +1836,14 @@ func (s *ISOService) UpdateIso(p *UpdateIsoParams) (*UpdateIsoResponse, error) {
 type UpdateIsoResponse struct {
 	Account               string            `json:"account"`
 	Accountid             string            `json:"accountid"`
+	Bits                  int               `json:"bits"`
 	Bootable              bool              `json:"bootable"`
 	Checksum              string            `json:"checksum"`
+	Childtemplates        []interface{}     `json:"childtemplates"`
 	Created               string            `json:"created"`
 	CrossZones            bool              `json:"crossZones"`
 	Details               map[string]string `json:"details"`
+	Directdownload        bool              `json:"directdownload"`
 	Displaytext           string            `json:"displaytext"`
 	Domain                string            `json:"domain"`
 	Domainid              string            `json:"domainid"`
@@ -1750,21 +1857,54 @@ type UpdateIsoResponse struct {
 	Isfeatured            bool              `json:"isfeatured"`
 	Ispublic              bool              `json:"ispublic"`
 	Isready               bool              `json:"isready"`
+	JobID                 string            `json:"jobid"`
+	Jobstatus             int               `json:"jobstatus"`
 	Name                  string            `json:"name"`
-	Ostypeid              string            `json:"ostypeid"`
+	Ostypeid              CSOsType          `json:"ostypeid"`
 	Ostypename            string            `json:"ostypename"`
+	Parenttemplateid      string            `json:"parenttemplateid"`
 	Passwordenabled       bool              `json:"passwordenabled"`
+	Physicalsize          int64             `json:"physicalsize"`
 	Project               string            `json:"project"`
 	Projectid             string            `json:"projectid"`
 	Removed               string            `json:"removed"`
+	Requireshvm           bool              `json:"requireshvm"`
 	Size                  int64             `json:"size"`
 	Sourcetemplateid      string            `json:"sourcetemplateid"`
 	Sshkeyenabled         bool              `json:"sshkeyenabled"`
 	Status                string            `json:"status"`
+	Tags                  []Tags            `json:"tags"`
 	Templatetag           string            `json:"templatetag"`
 	Templatetype          string            `json:"templatetype"`
 	Zoneid                string            `json:"zoneid"`
 	Zonename              string            `json:"zonename"`
+}
+
+func (r *UpdateIsoResponse) UnmarshalJSON(b []byte) error {
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+
+	if success, ok := m["success"].(string); ok {
+		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	type alias UpdateIsoResponse
+	return json.Unmarshal(b, (*alias)(r))
 }
 
 type UpdateIsoPermissionsParams struct {
@@ -1887,6 +2027,8 @@ func (s *ISOService) UpdateIsoPermissions(p *UpdateIsoPermissionsParams) (*Updat
 
 type UpdateIsoPermissionsResponse struct {
 	Displaytext string `json:"displaytext"`
+	JobID       string `json:"jobid"`
+	Jobstatus   int    `json:"jobstatus"`
 	Success     bool   `json:"success"`
 }
 
@@ -1899,6 +2041,14 @@ func (r *UpdateIsoPermissionsResponse) UnmarshalJSON(b []byte) error {
 
 	if success, ok := m["success"].(string); ok {
 		m["success"] = success == "true"
+		b, err = json.Marshal(m)
+		if err != nil {
+			return err
+		}
+	}
+
+	if ostypeid, ok := m["ostypeid"].(float64); ok {
+		m["ostypeid"] = strconv.Itoa(int(ostypeid))
 		b, err = json.Marshal(m)
 		if err != nil {
 			return err

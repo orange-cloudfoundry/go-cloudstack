@@ -103,37 +103,15 @@ type ChangeServiceForRouterResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -237,12 +215,13 @@ func (s *RouterService) ConfigureVirtualRouterElement(p *ConfigureVirtualRouterE
 }
 
 type VirtualRouterElementResponse struct {
-	JobID     string `json:"jobid"`
 	Account   string `json:"account"`
 	Domain    string `json:"domain"`
 	Domainid  string `json:"domainid"`
 	Enabled   bool   `json:"enabled"`
 	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
 	Nspid     string `json:"nspid"`
 	Project   string `json:"project"`
 	Projectid string `json:"projectid"`
@@ -327,12 +306,13 @@ func (s *RouterService) CreateVirtualRouterElement(p *CreateVirtualRouterElement
 }
 
 type CreateVirtualRouterElementResponse struct {
-	JobID     string `json:"jobid"`
 	Account   string `json:"account"`
 	Domain    string `json:"domain"`
 	Domainid  string `json:"domainid"`
 	Enabled   bool   `json:"enabled"`
 	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
 	Nspid     string `json:"nspid"`
 	Project   string `json:"project"`
 	Projectid string `json:"projectid"`
@@ -406,7 +386,6 @@ func (s *RouterService) DestroyRouter(p *DestroyRouterParams) (*DestroyRouterRes
 }
 
 type DestroyRouterResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -426,37 +405,15 @@ type DestroyRouterResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -836,37 +793,15 @@ type Router struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -1037,6 +972,8 @@ type VirtualRouterElement struct {
 	Domainid  string `json:"domainid"`
 	Enabled   bool   `json:"enabled"`
 	Id        string `json:"id"`
+	JobID     string `json:"jobid"`
+	Jobstatus int    `json:"jobstatus"`
 	Nspid     string `json:"nspid"`
 	Project   string `json:"project"`
 	Projectid string `json:"projectid"`
@@ -1110,7 +1047,6 @@ func (s *RouterService) RebootRouter(p *RebootRouterParams) (*RebootRouterRespon
 }
 
 type RebootRouterResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -1130,37 +1066,15 @@ type RebootRouterResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -1251,7 +1165,6 @@ func (s *RouterService) StartRouter(p *StartRouterParams) (*StartRouterResponse,
 }
 
 type StartRouterResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -1271,37 +1184,15 @@ type StartRouterResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`
@@ -1404,7 +1295,6 @@ func (s *RouterService) StopRouter(p *StopRouterParams) (*StopRouterResponse, er
 }
 
 type StopRouterResponse struct {
-	JobID               string `json:"jobid"`
 	Account             string `json:"account"`
 	Created             string `json:"created"`
 	Dns1                string `json:"dns1"`
@@ -1424,37 +1314,15 @@ type StopRouterResponse struct {
 	Ip6dns1             string `json:"ip6dns1"`
 	Ip6dns2             string `json:"ip6dns2"`
 	Isredundantrouter   bool   `json:"isredundantrouter"`
+	JobID               string `json:"jobid"`
+	Jobstatus           int    `json:"jobstatus"`
 	Linklocalip         string `json:"linklocalip"`
 	Linklocalmacaddress string `json:"linklocalmacaddress"`
 	Linklocalnetmask    string `json:"linklocalnetmask"`
 	Linklocalnetworkid  string `json:"linklocalnetworkid"`
 	Name                string `json:"name"`
 	Networkdomain       string `json:"networkdomain"`
-	Nic                 []struct {
-		Broadcasturi         string `json:"broadcasturi"`
-		Deviceid             string `json:"deviceid"`
-		Gateway              string `json:"gateway"`
-		Id                   string `json:"id"`
-		Ip6address           string `json:"ip6address"`
-		Ip6cidr              string `json:"ip6cidr"`
-		Ip6gateway           string `json:"ip6gateway"`
-		Ipaddress            string `json:"ipaddress"`
-		Isdefault            bool   `json:"isdefault"`
-		Isolationuri         string `json:"isolationuri"`
-		Macaddress           string `json:"macaddress"`
-		Netmask              string `json:"netmask"`
-		Networkid            string `json:"networkid"`
-		Networkname          string `json:"networkname"`
-		Nsxlogicalswitch     string `json:"nsxlogicalswitch"`
-		Nsxlogicalswitchport string `json:"nsxlogicalswitchport"`
-		Secondaryip          []struct {
-			Id        string `json:"id"`
-			Ipaddress string `json:"ipaddress"`
-		} `json:"secondaryip"`
-		Traffictype      string `json:"traffictype"`
-		Type             string `json:"type"`
-		Virtualmachineid string `json:"virtualmachineid"`
-	} `json:"nic"`
+	Nic                 []Nic  `json:"nic"`
 	Podid               string `json:"podid"`
 	Project             string `json:"project"`
 	Projectid           string `json:"projectid"`

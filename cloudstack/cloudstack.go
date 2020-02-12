@@ -26,6 +26,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -45,6 +46,9 @@ var idRegex = regexp.MustCompile(`^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]
 func IsID(id string) bool {
 	return idRegex.MatchString(id)
 }
+
+// ClientOption can be passed to new client functions to set custom options
+type ClientOption func(*CloudStackClient)
 
 // OptionFunc can be passed to the courtesy helper functions to set additional parameters
 type OptionFunc func(*CloudStackClient, interface{}) error
@@ -89,9 +93,6 @@ type CloudStackClient struct {
 	DiskOffering        *DiskOfferingService
 	Domain              *DomainService
 	Event               *EventService
-	ExtFirewall         *ExtFirewallService
-	ExtLoadBalancer     *ExtLoadBalancerService
-	ExternalDevice      *ExternalDeviceService
 	Firewall            *FirewallService
 	GuestOS             *GuestOSService
 	Host                *HostService
@@ -160,15 +161,36 @@ func (c *CSBool) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type CSOsType string
+
+func (c CSOsType) MarshalJSON() ([]byte, error) {
+	return json.Marshal(string(c))
+}
+
+func (c *CSOsType) UnmarshalJSON(data []byte) error {
+	value := strings.Trim(string(data), "\"")
+	*c = CSOsType(value)
+	return nil
+}
+
 // Creates a new client for communicating with CloudStack
-func newClient(apiurl string, apikey string, secret string, async bool, verifyssl bool) *CloudStackClient {
+func newClient(apiurl string, apikey string, secret string, async bool, verifyssl bool, options ...ClientOption) *CloudStackClient {
 	jar, _ := cookiejar.New(nil)
 	cs := &CloudStackClient{
 		client: &http.Client{
 			Jar: jar,
 			Transport: &http.Transport{
-				Proxy:           http.ProxyFromEnvironment,
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: !verifyssl}, // If verifyssl is true, skipping the verify should be false and vice versa
+				Proxy: http.ProxyFromEnvironment,
+				DialContext: (&net.Dialer{
+					Timeout:   30 * time.Second,
+					KeepAlive: 30 * time.Second,
+					DualStack: true,
+				}).DialContext,
+				MaxIdleConns:          100,
+				IdleConnTimeout:       90 * time.Second,
+				TLSClientConfig:       &tls.Config{InsecureSkipVerify: !verifyssl},
+				TLSHandshakeTimeout:   10 * time.Second,
+				ExpectContinueTimeout: 1 * time.Second,
 			},
 			Timeout: time.Duration(5 * time.Minute),
 		},
@@ -179,6 +201,11 @@ func newClient(apiurl string, apikey string, secret string, async bool, verifyss
 		options: []OptionFunc{},
 		timeout: 300,
 	}
+
+	for _, fn := range options {
+		fn(cs)
+	}
+
 	cs.APIDiscovery = NewAPIDiscoveryService(cs)
 	cs.Account = NewAccountService(cs)
 	cs.Address = NewAddressService(cs)
@@ -198,9 +225,6 @@ func newClient(apiurl string, apikey string, secret string, async bool, verifyss
 	cs.DiskOffering = NewDiskOfferingService(cs)
 	cs.Domain = NewDomainService(cs)
 	cs.Event = NewEventService(cs)
-	cs.ExtFirewall = NewExtFirewallService(cs)
-	cs.ExtLoadBalancer = NewExtLoadBalancerService(cs)
-	cs.ExternalDevice = NewExternalDeviceService(cs)
 	cs.Firewall = NewFirewallService(cs)
 	cs.GuestOS = NewGuestOSService(cs)
 	cs.Host = NewHostService(cs)
@@ -251,14 +275,15 @@ func newClient(apiurl string, apikey string, secret string, async bool, verifyss
 	cs.VirtualMachine = NewVirtualMachineService(cs)
 	cs.Volume = NewVolumeService(cs)
 	cs.Zone = NewZoneService(cs)
+
 	return cs
 }
 
 // Default non-async client. So for async calls you need to implement and check the async job result yourself. When using
 // HTTPS with a self-signed certificate to connect to your CloudStack API, you would probably want to set 'verifyssl' to
 // false so the call ignores the SSL errors/warnings.
-func NewClient(apiurl string, apikey string, secret string, verifyssl bool) *CloudStackClient {
-	cs := newClient(apiurl, apikey, secret, false, verifyssl)
+func NewClient(apiurl string, apikey string, secret string, verifyssl bool, options ...ClientOption) *CloudStackClient {
+	cs := newClient(apiurl, apikey, secret, false, verifyssl, options...)
 	return cs
 }
 
@@ -266,8 +291,8 @@ func NewClient(apiurl string, apikey string, secret string, verifyssl bool) *Clo
 // this client will wait until the async job is finished or until the configured AsyncTimeout is reached. When the async
 // job finishes successfully it will return actual object received from the API and nil, but when the timout is
 // reached it will return the initial object containing the async job ID for the running job and a warning.
-func NewAsyncClient(apiurl string, apikey string, secret string, verifyssl bool) *CloudStackClient {
-	cs := newClient(apiurl, apikey, secret, true, verifyssl)
+func NewAsyncClient(apiurl string, apikey string, secret string, verifyssl bool, options ...ClientOption) *CloudStackClient {
+	cs := newClient(apiurl, apikey, secret, true, verifyssl, options...)
 	return cs
 }
 
@@ -432,6 +457,55 @@ func getRawValue(b json.RawMessage) (json.RawMessage, error) {
 	return nil, fmt.Errorf("Unable to extract the raw value from:\n\n%s\n\n", string(b))
 }
 
+// WithAsyncTimeout takes a custom timeout to be used by the CloudStackClient
+func WithAsyncTimeout(timeout int64) ClientOption {
+	return func(cs *CloudStackClient) {
+		if timeout != 0 {
+			cs.timeout = timeout
+		}
+	}
+}
+
+// DomainIDSetter is an interface that every type that can set a domain ID must implement
+type DomainIDSetter interface {
+	SetDomainid(string)
+}
+
+// WithDomain takes either a domain name or ID and sets the `domainid` parameter
+func WithDomain(domain string) OptionFunc {
+	return func(cs *CloudStackClient, p interface{}) error {
+		ps, ok := p.(DomainIDSetter)
+
+		if !ok || domain == "" {
+			return nil
+		}
+
+		if !IsID(domain) {
+			id, _, err := cs.Domain.GetDomainID(domain)
+			if err != nil {
+				return err
+			}
+			domain = id
+		}
+
+		ps.SetDomainid(domain)
+
+		return nil
+	}
+}
+
+// WithHTTPClient takes a custom HTTP client to be used by the CloudStackClient
+func WithHTTPClient(client *http.Client) ClientOption {
+	return func(cs *CloudStackClient) {
+		if client != nil {
+			if client.Jar == nil {
+				client.Jar = cs.client.Jar
+			}
+			cs.client = client
+		}
+	}
+}
+
 // ProjectIDSetter is an interface that every type that can set a project ID must implement
 type ProjectIDSetter interface {
 	SetProjectid(string)
@@ -475,6 +549,34 @@ func WithVPCID(id string) OptionFunc {
 		}
 
 		vs.SetVpcid(id)
+
+		return nil
+	}
+}
+
+// ZoneIDSetter is an interface that every type that can set a zone ID must implement
+type ZoneIDSetter interface {
+	SetZoneid(string)
+}
+
+// WithZone takes either a zone name or ID and sets the `zoneid` parameter
+func WithZone(zone string) OptionFunc {
+	return func(cs *CloudStackClient, p interface{}) error {
+		zs, ok := p.(ZoneIDSetter)
+
+		if !ok || zone == "" {
+			return nil
+		}
+
+		if !IsID(zone) {
+			id, _, err := cs.Zone.GetZoneID(zone)
+			if err != nil {
+				return err
+			}
+			zone = id
+		}
+
+		zs.SetZoneid(zone)
 
 		return nil
 	}
@@ -630,30 +732,6 @@ type EventService struct {
 
 func NewEventService(cs *CloudStackClient) *EventService {
 	return &EventService{cs: cs}
-}
-
-type ExtFirewallService struct {
-	cs *CloudStackClient
-}
-
-func NewExtFirewallService(cs *CloudStackClient) *ExtFirewallService {
-	return &ExtFirewallService{cs: cs}
-}
-
-type ExtLoadBalancerService struct {
-	cs *CloudStackClient
-}
-
-func NewExtLoadBalancerService(cs *CloudStackClient) *ExtLoadBalancerService {
-	return &ExtLoadBalancerService{cs: cs}
-}
-
-type ExternalDeviceService struct {
-	cs *CloudStackClient
-}
-
-func NewExternalDeviceService(cs *CloudStackClient) *ExternalDeviceService {
-	return &ExternalDeviceService{cs: cs}
 }
 
 type FirewallService struct {
