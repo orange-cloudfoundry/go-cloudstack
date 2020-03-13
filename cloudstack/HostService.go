@@ -209,7 +209,6 @@ type AddBaremetalHostResponse struct {
 	Gpugroup                   []AddBaremetalHostResponseGpugroup `json:"gpugroup"`
 	Hahost                     bool                               `json:"hahost"`
 	Hasenoughcapacity          bool                               `json:"hasenoughcapacity"`
-	Hostha                     string                             `json:"hostha"`
 	Hosttags                   string                             `json:"hosttags"`
 	Hypervisor                 string                             `json:"hypervisor"`
 	Hypervisorversion          string                             `json:"hypervisorversion"`
@@ -539,7 +538,6 @@ type AddHostResponse struct {
 	Gpugroup                   []AddHostResponseGpugroup   `json:"gpugroup"`
 	Hahost                     bool                        `json:"hahost"`
 	Hasenoughcapacity          bool                        `json:"hasenoughcapacity"`
-	Hostha                     string                      `json:"hostha"`
 	Hosttags                   string                      `json:"hosttags"`
 	Hypervisor                 string                      `json:"hypervisor"`
 	Hypervisorversion          string                      `json:"hypervisorversion"`
@@ -750,7 +748,6 @@ type CancelHostMaintenanceResponse struct {
 	Gpugroup                   []CancelHostMaintenanceResponseGpugroup `json:"gpugroup"`
 	Hahost                     bool                                    `json:"hahost"`
 	Hasenoughcapacity          bool                                    `json:"hasenoughcapacity"`
-	Hostha                     string                                  `json:"hostha"`
 	Hosttags                   string                                  `json:"hosttags"`
 	Hypervisor                 string                                  `json:"hypervisor"`
 	Hypervisorversion          string                                  `json:"hypervisorversion"`
@@ -1891,7 +1888,6 @@ type Host struct {
 	Gpugroup                   []HostGpugroup              `json:"gpugroup"`
 	Hahost                     bool                        `json:"hahost"`
 	Hasenoughcapacity          bool                        `json:"hasenoughcapacity"`
-	Hostha                     string                      `json:"hostha"`
 	Hosttags                   string                      `json:"hosttags"`
 	Hypervisor                 string                      `json:"hypervisor"`
 	Hypervisorversion          string                      `json:"hypervisorversion"`
@@ -2031,7 +2027,6 @@ type PrepareHostForMaintenanceResponse struct {
 	Gpugroup                   []PrepareHostForMaintenanceResponseGpugroup `json:"gpugroup"`
 	Hahost                     bool                                        `json:"hahost"`
 	Hasenoughcapacity          bool                                        `json:"hasenoughcapacity"`
-	Hostha                     string                                      `json:"hostha"`
 	Hosttags                   string                                      `json:"hosttags"`
 	Hypervisor                 string                                      `json:"hypervisor"`
 	Hypervisorversion          string                                      `json:"hypervisorversion"`
@@ -2171,7 +2166,6 @@ type ReconnectHostResponse struct {
 	Gpugroup                   []ReconnectHostResponseGpugroup `json:"gpugroup"`
 	Hahost                     bool                            `json:"hahost"`
 	Hasenoughcapacity          bool                            `json:"hasenoughcapacity"`
-	Hostha                     string                          `json:"hostha"`
 	Hosttags                   string                          `json:"hosttags"`
 	Hypervisor                 string                          `json:"hypervisor"`
 	Hypervisorversion          string                          `json:"hypervisorversion"`
@@ -2485,7 +2479,6 @@ type UpdateHostResponse struct {
 	Gpugroup                   []UpdateHostResponseGpugroup `json:"gpugroup"`
 	Hahost                     bool                         `json:"hahost"`
 	Hasenoughcapacity          bool                         `json:"hasenoughcapacity"`
-	Hostha                     string                       `json:"hostha"`
 	Hosttags                   string                       `json:"hosttags"`
 	Hypervisor                 string                       `json:"hypervisor"`
 	Hypervisorversion          string                       `json:"hypervisorversion"`
