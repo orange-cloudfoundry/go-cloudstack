@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -526,4 +527,13 @@ type Tag struct {
 	Resourceid   string `json:"resourceid"`
 	Resourcetype string `json:"resourcetype"`
 	Value        string `json:"value"`
+}
+
+func getSortedKeysFromMap(m map[string]string) []string {
+	var keys []string
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }
