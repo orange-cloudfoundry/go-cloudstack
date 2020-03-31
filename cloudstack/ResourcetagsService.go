@@ -25,6 +25,14 @@ import (
 	"strings"
 )
 
+func getSortedKeysFromMap(m map[string]string) (keys []string) {
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return
+}
+
 type CreateTagsParams struct {
 	p map[string]interface{}
 }
@@ -527,13 +535,4 @@ type Tag struct {
 	Resourceid   string `json:"resourceid"`
 	Resourcetype string `json:"resourcetype"`
 	Value        string `json:"value"`
-}
-
-func getSortedKeysFromMap(m map[string]string) []string {
-	var keys []string
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	return keys
 }
