@@ -844,15 +844,6 @@ func (s *service) GenerateCode() ([]byte, error) {
 		pn("	return json.Unmarshal(resp, result)")
 		pn("}")
 	}
-	if s.name == "ResourcetagsService" {
-		pn("func getSortedKeysFromMap(m map[string]string) (keys []string) {")
-		pn("	for k := range m {")
-		pn("		keys = append(keys, k)")
-		pn("	}")
-		pn("	sort.Strings(keys)")
-		pn("	return")
-		pn("}")
-	}
 
 	for _, a := range s.apis {
 		s.generateParamType(a)

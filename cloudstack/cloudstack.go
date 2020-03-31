@@ -466,6 +466,15 @@ func getSortedKeysFromMap(m map[string]string) (keys []string) {
 	return keys
 }
 
+// getSortedKeysFromMap returns the keys from m in increasing order.
+func getSortedKeysFromMap(m map[string]string) (keys []string) {
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return
+}
+
 // WithAsyncTimeout takes a custom timeout to be used by the CloudStackClient
 func WithAsyncTimeout(timeout int64) ClientOption {
 	return func(cs *CloudStackClient) {
