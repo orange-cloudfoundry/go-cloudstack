@@ -463,7 +463,7 @@ func getSortedKeysFromMap(m map[string]string) (keys []string) {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
-	return
+	return keys
 }
 
 // WithAsyncTimeout takes a custom timeout to be used by the CloudStackClient

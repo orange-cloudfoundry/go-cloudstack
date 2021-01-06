@@ -75,7 +75,6 @@ func (p *AddBaremetalHostParams) SetAllocationstate(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["allocationstate"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetClusterid(v string) {
@@ -83,7 +82,6 @@ func (p *AddBaremetalHostParams) SetClusterid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clusterid"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetClustername(v string) {
@@ -91,7 +89,6 @@ func (p *AddBaremetalHostParams) SetClustername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clustername"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetHosttags(v []string) {
@@ -99,7 +96,6 @@ func (p *AddBaremetalHostParams) SetHosttags(v []string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hosttags"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetHypervisor(v string) {
@@ -107,7 +103,6 @@ func (p *AddBaremetalHostParams) SetHypervisor(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hypervisor"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetIpaddress(v string) {
@@ -115,7 +110,6 @@ func (p *AddBaremetalHostParams) SetIpaddress(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["ipaddress"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetPassword(v string) {
@@ -123,7 +117,6 @@ func (p *AddBaremetalHostParams) SetPassword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["password"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetPodid(v string) {
@@ -131,7 +124,6 @@ func (p *AddBaremetalHostParams) SetPodid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["podid"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetUrl(v string) {
@@ -139,7 +131,6 @@ func (p *AddBaremetalHostParams) SetUrl(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["url"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetUsername(v string) {
@@ -147,7 +138,6 @@ func (p *AddBaremetalHostParams) SetUsername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["username"] = v
-	return
 }
 
 func (p *AddBaremetalHostParams) SetZoneid(v string) {
@@ -155,7 +145,6 @@ func (p *AddBaremetalHostParams) SetZoneid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["zoneid"] = v
-	return
 }
 
 // You should always use this function to get a new AddBaremetalHostParams instance,
@@ -288,7 +277,6 @@ func (p *AddGloboDnsHostParams) SetPassword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["password"] = v
-	return
 }
 
 func (p *AddGloboDnsHostParams) SetPhysicalnetworkid(v string) {
@@ -296,7 +284,6 @@ func (p *AddGloboDnsHostParams) SetPhysicalnetworkid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["physicalnetworkid"] = v
-	return
 }
 
 func (p *AddGloboDnsHostParams) SetUrl(v string) {
@@ -304,7 +291,6 @@ func (p *AddGloboDnsHostParams) SetUrl(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["url"] = v
-	return
 }
 
 func (p *AddGloboDnsHostParams) SetUsername(v string) {
@@ -312,7 +298,6 @@ func (p *AddGloboDnsHostParams) SetUsername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["username"] = v
-	return
 }
 
 // You should always use this function to get a new AddGloboDnsHostParams instance,
@@ -412,7 +397,6 @@ func (p *AddHostParams) SetAllocationstate(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["allocationstate"] = v
-	return
 }
 
 func (p *AddHostParams) SetClusterid(v string) {
@@ -420,7 +404,6 @@ func (p *AddHostParams) SetClusterid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clusterid"] = v
-	return
 }
 
 func (p *AddHostParams) SetClustername(v string) {
@@ -428,7 +411,6 @@ func (p *AddHostParams) SetClustername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clustername"] = v
-	return
 }
 
 func (p *AddHostParams) SetHosttags(v []string) {
@@ -436,7 +418,6 @@ func (p *AddHostParams) SetHosttags(v []string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hosttags"] = v
-	return
 }
 
 func (p *AddHostParams) SetHypervisor(v string) {
@@ -444,7 +425,6 @@ func (p *AddHostParams) SetHypervisor(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hypervisor"] = v
-	return
 }
 
 func (p *AddHostParams) SetPassword(v string) {
@@ -452,7 +432,6 @@ func (p *AddHostParams) SetPassword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["password"] = v
-	return
 }
 
 func (p *AddHostParams) SetPodid(v string) {
@@ -460,7 +439,6 @@ func (p *AddHostParams) SetPodid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["podid"] = v
-	return
 }
 
 func (p *AddHostParams) SetUrl(v string) {
@@ -468,7 +446,6 @@ func (p *AddHostParams) SetUrl(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["url"] = v
-	return
 }
 
 func (p *AddHostParams) SetUsername(v string) {
@@ -476,7 +453,6 @@ func (p *AddHostParams) SetUsername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["username"] = v
-	return
 }
 
 func (p *AddHostParams) SetZoneid(v string) {
@@ -484,7 +460,6 @@ func (p *AddHostParams) SetZoneid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["zoneid"] = v
-	return
 }
 
 // You should always use this function to get a new AddHostParams instance,
@@ -611,7 +586,6 @@ func (p *AddSecondaryStorageParams) SetUrl(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["url"] = v
-	return
 }
 
 func (p *AddSecondaryStorageParams) SetZoneid(v string) {
@@ -619,7 +593,6 @@ func (p *AddSecondaryStorageParams) SetZoneid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["zoneid"] = v
-	return
 }
 
 // You should always use this function to get a new AddSecondaryStorageParams instance,
@@ -679,7 +652,6 @@ func (p *CancelHostMaintenanceParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 // You should always use this function to get a new CancelHostMaintenanceParams instance,
@@ -824,7 +796,6 @@ func (p *DedicateHostParams) SetAccount(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["account"] = v
-	return
 }
 
 func (p *DedicateHostParams) SetDomainid(v string) {
@@ -832,7 +803,6 @@ func (p *DedicateHostParams) SetDomainid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["domainid"] = v
-	return
 }
 
 func (p *DedicateHostParams) SetHostid(v string) {
@@ -840,7 +810,6 @@ func (p *DedicateHostParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 // You should always use this function to get a new DedicateHostParams instance,
@@ -927,7 +896,6 @@ func (p *DeleteHostParams) SetForced(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["forced"] = v
-	return
 }
 
 func (p *DeleteHostParams) SetForcedestroylocalstorage(v bool) {
@@ -935,7 +903,6 @@ func (p *DeleteHostParams) SetForcedestroylocalstorage(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["forcedestroylocalstorage"] = v
-	return
 }
 
 func (p *DeleteHostParams) SetId(v string) {
@@ -943,7 +910,6 @@ func (p *DeleteHostParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 // You should always use this function to get a new DeleteHostParams instance,
@@ -1024,7 +990,6 @@ func (p *DisableOutOfBandManagementForHostParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 // You should always use this function to get a new DisableOutOfBandManagementForHostParams instance,
@@ -1107,7 +1072,6 @@ func (p *EnableOutOfBandManagementForHostParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 // You should always use this function to get a new EnableOutOfBandManagementForHostParams instance,
@@ -1201,7 +1165,6 @@ func (p *FindHostsForMigrationParams) SetKeyword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["keyword"] = v
-	return
 }
 
 func (p *FindHostsForMigrationParams) SetPage(v int) {
@@ -1209,7 +1172,6 @@ func (p *FindHostsForMigrationParams) SetPage(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["page"] = v
-	return
 }
 
 func (p *FindHostsForMigrationParams) SetPagesize(v int) {
@@ -1217,7 +1179,6 @@ func (p *FindHostsForMigrationParams) SetPagesize(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["pagesize"] = v
-	return
 }
 
 func (p *FindHostsForMigrationParams) SetVirtualmachineid(v string) {
@@ -1225,7 +1186,6 @@ func (p *FindHostsForMigrationParams) SetVirtualmachineid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["virtualmachineid"] = v
-	return
 }
 
 // You should always use this function to get a new FindHostsForMigrationParams instance,
@@ -1342,7 +1302,6 @@ func (p *ListDedicatedHostsParams) SetAccount(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["account"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetAffinitygroupid(v string) {
@@ -1350,7 +1309,6 @@ func (p *ListDedicatedHostsParams) SetAffinitygroupid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["affinitygroupid"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetDomainid(v string) {
@@ -1358,7 +1316,6 @@ func (p *ListDedicatedHostsParams) SetDomainid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["domainid"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetHostid(v string) {
@@ -1366,7 +1323,6 @@ func (p *ListDedicatedHostsParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetKeyword(v string) {
@@ -1374,7 +1330,6 @@ func (p *ListDedicatedHostsParams) SetKeyword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["keyword"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetPage(v int) {
@@ -1382,7 +1337,6 @@ func (p *ListDedicatedHostsParams) SetPage(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["page"] = v
-	return
 }
 
 func (p *ListDedicatedHostsParams) SetPagesize(v int) {
@@ -1390,7 +1344,6 @@ func (p *ListDedicatedHostsParams) SetPagesize(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["pagesize"] = v
-	return
 }
 
 // You should always use this function to get a new ListDedicatedHostsParams instance,
@@ -1460,7 +1413,6 @@ func (p *ListHostTagsParams) SetKeyword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["keyword"] = v
-	return
 }
 
 func (p *ListHostTagsParams) SetPage(v int) {
@@ -1468,7 +1420,6 @@ func (p *ListHostTagsParams) SetPage(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["page"] = v
-	return
 }
 
 func (p *ListHostTagsParams) SetPagesize(v int) {
@@ -1476,7 +1427,6 @@ func (p *ListHostTagsParams) SetPagesize(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["pagesize"] = v
-	return
 }
 
 // You should always use this function to get a new ListHostTagsParams instance,
@@ -1624,7 +1574,6 @@ func (p *ListHostsParams) SetClusterid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clusterid"] = v
-	return
 }
 
 func (p *ListHostsParams) SetDetails(v []string) {
@@ -1632,7 +1581,6 @@ func (p *ListHostsParams) SetDetails(v []string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["details"] = v
-	return
 }
 
 func (p *ListHostsParams) SetHahost(v bool) {
@@ -1640,7 +1588,6 @@ func (p *ListHostsParams) SetHahost(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hahost"] = v
-	return
 }
 
 func (p *ListHostsParams) SetHypervisor(v string) {
@@ -1648,7 +1595,6 @@ func (p *ListHostsParams) SetHypervisor(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hypervisor"] = v
-	return
 }
 
 func (p *ListHostsParams) SetId(v string) {
@@ -1656,7 +1602,6 @@ func (p *ListHostsParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 func (p *ListHostsParams) SetKeyword(v string) {
@@ -1664,7 +1609,6 @@ func (p *ListHostsParams) SetKeyword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["keyword"] = v
-	return
 }
 
 func (p *ListHostsParams) SetName(v string) {
@@ -1672,7 +1616,6 @@ func (p *ListHostsParams) SetName(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["name"] = v
-	return
 }
 
 func (p *ListHostsParams) SetOutofbandmanagementenabled(v bool) {
@@ -1680,7 +1623,6 @@ func (p *ListHostsParams) SetOutofbandmanagementenabled(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["outofbandmanagementenabled"] = v
-	return
 }
 
 func (p *ListHostsParams) SetOutofbandmanagementpowerstate(v string) {
@@ -1688,7 +1630,6 @@ func (p *ListHostsParams) SetOutofbandmanagementpowerstate(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["outofbandmanagementpowerstate"] = v
-	return
 }
 
 func (p *ListHostsParams) SetPage(v int) {
@@ -1696,7 +1637,6 @@ func (p *ListHostsParams) SetPage(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["page"] = v
-	return
 }
 
 func (p *ListHostsParams) SetPagesize(v int) {
@@ -1704,7 +1644,6 @@ func (p *ListHostsParams) SetPagesize(v int) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["pagesize"] = v
-	return
 }
 
 func (p *ListHostsParams) SetPodid(v string) {
@@ -1712,7 +1651,6 @@ func (p *ListHostsParams) SetPodid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["podid"] = v
-	return
 }
 
 func (p *ListHostsParams) SetResourcestate(v string) {
@@ -1720,7 +1658,6 @@ func (p *ListHostsParams) SetResourcestate(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["resourcestate"] = v
-	return
 }
 
 func (p *ListHostsParams) SetState(v string) {
@@ -1728,7 +1665,6 @@ func (p *ListHostsParams) SetState(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["state"] = v
-	return
 }
 
 func (p *ListHostsParams) SetType(v string) {
@@ -1736,7 +1672,6 @@ func (p *ListHostsParams) SetType(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["type"] = v
-	return
 }
 
 func (p *ListHostsParams) SetVirtualmachineid(v string) {
@@ -1744,7 +1679,6 @@ func (p *ListHostsParams) SetVirtualmachineid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["virtualmachineid"] = v
-	return
 }
 
 func (p *ListHostsParams) SetZoneid(v string) {
@@ -1752,7 +1686,6 @@ func (p *ListHostsParams) SetZoneid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["zoneid"] = v
-	return
 }
 
 // You should always use this function to get a new ListHostsParams instance,
@@ -2364,7 +2297,6 @@ func (p *PrepareHostForMaintenanceParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 // You should always use this function to get a new PrepareHostForMaintenanceParams instance,
@@ -2503,7 +2435,6 @@ func (p *ReconnectHostParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 // You should always use this function to get a new ReconnectHostParams instance,
@@ -2642,7 +2573,6 @@ func (p *ReleaseDedicatedHostParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 // You should always use this function to get a new ReleaseDedicatedHostParams instance,
@@ -2711,7 +2641,6 @@ func (p *ReleaseHostReservationParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 // You should always use this function to get a new ReleaseHostReservationParams instance,
@@ -2796,7 +2725,6 @@ func (p *UpdateHostParams) SetAllocationstate(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["allocationstate"] = v
-	return
 }
 
 func (p *UpdateHostParams) SetAnnotation(v string) {
@@ -2804,7 +2732,6 @@ func (p *UpdateHostParams) SetAnnotation(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["annotation"] = v
-	return
 }
 
 func (p *UpdateHostParams) SetHosttags(v []string) {
@@ -2812,7 +2739,6 @@ func (p *UpdateHostParams) SetHosttags(v []string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hosttags"] = v
-	return
 }
 
 func (p *UpdateHostParams) SetId(v string) {
@@ -2820,7 +2746,6 @@ func (p *UpdateHostParams) SetId(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["id"] = v
-	return
 }
 
 func (p *UpdateHostParams) SetOscategoryid(v string) {
@@ -2828,7 +2753,6 @@ func (p *UpdateHostParams) SetOscategoryid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["oscategoryid"] = v
-	return
 }
 
 func (p *UpdateHostParams) SetUrl(v string) {
@@ -2836,7 +2760,6 @@ func (p *UpdateHostParams) SetUrl(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["url"] = v
-	return
 }
 
 // You should always use this function to get a new UpdateHostParams instance,
@@ -2968,7 +2891,6 @@ func (p *UpdateHostPasswordParams) SetClusterid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["clusterid"] = v
-	return
 }
 
 func (p *UpdateHostPasswordParams) SetHostid(v string) {
@@ -2976,7 +2898,6 @@ func (p *UpdateHostPasswordParams) SetHostid(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["hostid"] = v
-	return
 }
 
 func (p *UpdateHostPasswordParams) SetPassword(v string) {
@@ -2984,7 +2905,6 @@ func (p *UpdateHostPasswordParams) SetPassword(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["password"] = v
-	return
 }
 
 func (p *UpdateHostPasswordParams) SetUpdate_passwd_on_host(v bool) {
@@ -2992,7 +2912,6 @@ func (p *UpdateHostPasswordParams) SetUpdate_passwd_on_host(v bool) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["update_passwd_on_host"] = v
-	return
 }
 
 func (p *UpdateHostPasswordParams) SetUsername(v string) {
@@ -3000,7 +2919,6 @@ func (p *UpdateHostPasswordParams) SetUsername(v string) {
 		p.p = make(map[string]interface{})
 	}
 	p.p["username"] = v
-	return
 }
 
 // You should always use this function to get a new UpdateHostPasswordParams instance,
