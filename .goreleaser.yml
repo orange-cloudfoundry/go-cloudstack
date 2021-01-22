@@ -1,0 +1,30 @@
+project_name: go-cloudstack
+
+builds:
+  -
+    &template
+    id: binary
+    skip: true
+    binary: mdproxy4cs
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s
+      - -w
+      - -X github.com/prometheus/common/version.Version={{.Version}}
+      - -X github.com/prometheus/common/version.Revision={{.FullCommit}}
+      - -X github.com/prometheus/common/version.Branch={{.Branch}}
+      - -X github.com/prometheus/common/version.BuildUser={{.Env.USER}}
+      - -X github.com/prometheus/common/version.BuildDate={{.Date}}
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+
+release:
+  github:
+    owner: orange-cloudfoundry
+    name: go-cloudstack
+  prerelease: auto
+  name_template: '{{.Tag}}'
